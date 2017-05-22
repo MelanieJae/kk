@@ -1,4 +1,4 @@
-This is the repository for my final capstone project for Udacity's Android Developer Nanodegree.
+This is the repository for an app for a small local business.
 
 # App Notes
 
