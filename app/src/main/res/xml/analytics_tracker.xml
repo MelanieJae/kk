@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- analytics -->
+    <string name="ga_trackingId">UA-99713452-1</string>
+    <!--<string name="client_id">-->
+    <!--842497488797-eri0isug177sssm4sokiflk9bnrmqh7j.apps.googleusercontent.com-->
+    <!--</string>-->
+    <bool name="ga_autoActivityTracking">true</bool>
+
+    <!-- screen name tags -->
+    <screenName name="com.application.melanieh.kk.ui.MainActivity">
+        Main Screen
+    </screenName>
+
+
+</resources>

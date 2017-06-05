@@ -41,3 +41,7 @@ To build the project from Android Studio, follow these instructions: https://dev
 This app is for a small local business and provides the ability to browse products sold in the store as well as purchase them remotely via the app
 for shiping or in-store pickup.
 
+Image Credits:
+
+All images (c) NSBHappenings.com
+

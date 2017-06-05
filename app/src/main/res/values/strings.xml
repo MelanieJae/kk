@@ -1,3 +1,65 @@
-<resources>
-    <string name="app_name">KK</string>
+<resources xmlns:https="http://schemas.android.com/tools">
+    <string name="app_name" translatable="false">Kountry Klutter</string>
+
+    <!-- app credentials -->
+    <string name="facebook_app_id">1286774598105839</string>
+
+    <!-- universal strings -->
+    <string name="dialog_yes_btn">Yes</string>
+    <string name="dialog_ok_btn">OK</string>
+    <string name="dialog_no_btn">No</string>
+
+    <string name="emptyview_no_results">Sorry, there are no results to display</string>
+    <string name="emptyview_no_internet_connection">
+        There doesn\'t appear to be an internet connection.
+        \nPlease check your connection</string>
+
+    <!-- content descriptions -->
+    <string name="toolbar_image_cd">Image of candles and knick-knacks available at Kountry Klutter</string>
+    <string name="toolbar_logo_cd">Kountry Klutter logo</string>
+    <string name="scrolling_menu_cd">Scrolling items menu</string>
+    <string name="menu_image_cd">Menu item image</string>
+
+    <!-- overflow menu -->
+    <string name="pref_settings" translatable="false">View User Settings</string>
+    <string name="menu_view_pref_settings" translatable="false">View User Settings</string>
+
+    <!-- notifications -->
+
+    <!-- settings activity -->
+
+    <!-- pref settings labels and keys -->
+
+    <!-- view plan selections activity -->
+
+    <!-- plan screens -->
+
+    <!-- search form screen -->
+
+    <!-- search result screens -->
+
+    <!-- data package -->
+    <!-- provider -->
+    <string name="error_inserting_plan">Error creating plan entry</string>
+    <string name="insert_plan_successful">Plan entry created successfully</string>
+
+    <string name="error_updating_plan">Error updating plan with selection</string>
+    <string name="update_plan_successful">Plan updated successfully</string>
+
+    <string name="error_deleting_plan">Error deleting plan</string>
+    <string name="plan_deletion_successful">Plan deleted successfully</string>
+
+    <string name="error_deleting_plans_table">Error deleting plan table</string>
+    <string name="plan_table_deletion_successful">Plan table deleted successfully</string>
+
+    <string name="error_querying_plan">Error retrieving information for plan(s)</string>
+
+
+
+    <!-- web browser detail fragment screen -->
+    <string name="webview_error_desc">The page did not load properly.</string>
+
+
+    <!-- credentials -->
+    <string name="maps_v2_key">AIzaSyD7lDjQTrH5Mc5vmobw-Gav6Qt-svuhE3Q</string>
 </resources>
