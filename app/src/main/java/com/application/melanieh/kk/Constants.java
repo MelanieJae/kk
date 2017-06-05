@@ -10,6 +10,11 @@ public class Constants {
         //
     }
 
+    /** fragmeNt argument and other keys **/
+    public static final String TRANSITION_IMAGE_KEY = "transition image URL string";
+    public static final String TRANSITION_TEXT_KEY_NAME = "transition text-product name";
+    public static final String TRANSITION_TEXT_KEY_COST = "transition text-product cost";
+
     /** sample image */
     public static final String SAMPLE_IMAGE_URL = BuildConfig.SAMPLE_IMAGE_URL;
 

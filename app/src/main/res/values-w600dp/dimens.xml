@@ -20,9 +20,9 @@
     <dimen name="toolbar_elevation">4dp</dimen>
 
     <!-- search_result cardviews -->
-    <dimen name="category_product_item_card_elevation">4dp</dimen>
-    <dimen name="category_product_item_card_layout_margin">6dp</dimen>
-    <dimen name="category_product_item_card_corner_radius">3dp</dimen>
+    <dimen name="result_item_card_elevation">4dp</dimen>
+    <dimen name="result_item_card_layout_margin">6dp</dimen>
+    <dimen name="result_item_card_corner_radius">3dp</dimen>
     <dimen name="layout_margin">6dp</dimen>
     <dimen name="card_corner_radius">3dp</dimen>
     <dimen name="iv_layout_height">200dp</dimen>

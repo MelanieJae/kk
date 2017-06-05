@@ -55,7 +55,6 @@
     <string name="error_querying_plan">Error retrieving information for plan(s)</string>
 
 
-
     <!-- web browser detail fragment screen -->
     <string name="webview_error_desc">The page did not load properly.</string>
 

@@ -1,5 +1,10 @@
 package com.application.melanieh.kk.ui;
 
+import android.annotation.TargetApi;
+import android.app.ActivityOptions;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
@@ -89,17 +95,25 @@ public class MainActivity extends AppCompatActivity {
             return new ImageViewHolder(view);
         }
 
+        @TargetApi(Build.VERSION_CODES.LOLLIPOP)
         @Override
         public void onBindViewHolder(MenuImageAdapter.ImageViewHolder holder, int position) {
             Timber.d("onBindViewHolder");
-            String imageString = imageList.get(position);
+            final String imageString = imageList.get(position);
             Timber.d("imageString: " + imageString);
 
-            // destination class for intent; varies according to which button is selected
-
-            // toolbar image - loaded into product_item_list_content layout
             ImageHandler.getSharedInstance(holder.itemView.getContext()).load(imageString).
                     fit().centerCrop().into(holder.gridItemIV);
+            holder.categoryLabel.setText("Soy Candles");
+
+            holder.gridItemIV.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent launchProductsList = new Intent(MainActivity.this, ProductCategoryDetailActivity.class);
+                    launchProductsList.setAction(Intent.ACTION_VIEW);
+                    startActivity(launchProductsList);
+                }
+            });
 
         }
 
@@ -112,6 +126,8 @@ public class MainActivity extends AppCompatActivity {
         public class ImageViewHolder extends RecyclerView.ViewHolder {
             @BindView(R.id.product_list_item_iv)
             ImageView gridItemIV;
+            @BindView(R.id.product_category_label)
+            TextView categoryLabel;
 
             public ImageViewHolder(View itemView) {
                 super(itemView);
