@@ -1,27 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
-    android:id="@+id/product_cardview"
-    card_view:cardElevation="@dimen/category_product_item_card_elevation"
-    android:layout_margin="@dimen/category_product_item_card_layout_margin"
-    card_view:cardCornerRadius="@dimen/category_product_item_card_corner_radius"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/product_iv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/name"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/cost"
+        android:layout_height="@dimen/detail_screen_iv_height"
+        android:scaleType="centerCrop"
+        android:layout_marginLeft="@dimen/list_item_horiz_margin"
+        android:layout_marginRight="@dimen/list_item_horiz_margin"
+        android:layout_marginTop="@dimen/list_item_vert_margin"
+        android:layout_marginBottom="@dimen/list_item_vert_margin" />
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:orientation="vertical">
 
-</android.support.v7.widget.CardView>
+            <TextView
+                style="@style/ProductCategoryLabel"
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                style="@style/ProductCategoryLabel"
+                android:id="@+id/cost"
+                android:textSize="32sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </FrameLayout>
+
+</FrameLayout>

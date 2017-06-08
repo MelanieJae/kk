@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="product_categories">
+        <item>Candles</item>
+        <item>Gifts</item>
+        <item>Gift Baskets</item>
+    </string-array>
+
+    <string-array name="candle_categories">
+        <item>Jar Candles</item>
+        <item>Tarts</item>
+        <item>Tealights</item>
+        <item>Tart burners</item>
+        <item>Electric tart warmers</item>
+        <item>Reed Diffusers</item>
+        <item>Wood Wick Candles</item>
+    </string-array>
+
+    <string-array name="gift_categories">
+        <item>Lotions</item>
+        <item>Primitive Items</item>
+    </string-array>
+
+    <string-array name="gift_basket_categories">
+        <item>Baby</item>
+        <item>Graduation</item>
+        <item>Housewarming</item>
+        <item>Get Well</item>
+        <item>Thank You</item>
+        <item>Teacher</item>
+        <item>Holidays</item>
+    </string-array>
+
+    <integer-array name="temp_category_product_drawables">
+        <item>@drawable/candle_category_sample</item>
+        <item>@drawable/gift_basket_category_sample</item>
+        <item>@drawable/gifts_category_sample</item>
+    </integer-array>
+
+    <string-array name="candle_varieties">
+        <item>Cinnamon</item>
+        <item>Lavender</item>
+        <item>Linen</item>
+        <item>Lemon</item>
+        <item>Pine</item>
+    </string-array>
+
+</resources>

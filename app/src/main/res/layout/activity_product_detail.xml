@@ -8,6 +8,7 @@
     <fragment
         android:id="@+id/productDetailFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:name="com.application.melanieh.kk.ui.ProductDetailFragment"/>
 
 </android.support.constraint.ConstraintLayout>

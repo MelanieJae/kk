@@ -2,6 +2,7 @@ package com.application.melanieh.kk;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.IntegerRes;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
@@ -14,28 +15,28 @@ import butterknife.BindInt;
 
 public class Product implements Parcelable {
 
-    @BindInt(0) int productData;
-
     // attributes
     private String name;
     private String cost;
     private ArrayList<String> varieties;
     private String productImageUrlString;
+    private Integer productImageResId;
+    String[] productParamStrings = {name, cost, null, productImageUrlString};
 
-    public Product(int productData, String name, String cost, @Nullable ArrayList<String> varieties, String productImageUrlString) {
-        this.productData = productData;
+    public Product(String name, String cost, @Nullable ArrayList<String> varieties,
+                   String productImageUrlString) {
         this.name = name;
         this.cost = cost;
         this.varieties = varieties;
         this.productImageUrlString = productImageUrlString;
     }
 
-    public int getProductData() {
-        return productData;
-    }
-
-    public void setProductData(int productData) {
-        this.productData = productData;
+    public Product(String name, String cost, @Nullable ArrayList<String> varieties,
+                   Integer imageResId) {
+        this.name = name;
+        this.cost = cost;
+        this.varieties = varieties;
+        this.productImageResId = imageResId;
     }
 
     public String getName() {
@@ -70,6 +71,14 @@ public class Product implements Parcelable {
         this.productImageUrlString = productImageUrlString;
     }
 
+    public Integer getProductImageResId() {
+        return productImageResId;
+    }
+
+    public void setProductImageResId(Integer productImageResId) {
+        this.productImageResId = productImageResId;
+    }
+
     // Parcelable interface methods
 
     //constructor
@@ -85,7 +94,11 @@ public class Product implements Parcelable {
     };
 
     private Product(Parcel in) {
-        productData = in.readInt();
+        readFromParcel(in);
+    }
+
+    private void readFromParcel(Parcel in) {
+        in.readStringArray(productParamStrings);
     }
 
     @Override

@@ -20,9 +20,9 @@
     <dimen name="toolbar_elevation">4dp</dimen>
 
     <!-- search_result cardviews -->
-    <dimen name="result_item_card_elevation">4dp</dimen>
-    <dimen name="result_item_card_layout_margin">6dp</dimen>
-    <dimen name="result_item_card_corner_radius">3dp</dimen>
+    <dimen name="category_product_item_card_elevation">4dp</dimen>
+    <dimen name="category_product_item_card_layout_margin">6dp</dimen>
+    <dimen name="category_product_item_card_corner_radius">3dp</dimen>
     <dimen name="layout_margin">6dp</dimen>
     <dimen name="card_corner_radius">3dp</dimen>
     <dimen name="iv_layout_height">200dp</dimen>
@@ -44,15 +44,16 @@
     <dimen name="widget_margin">8dp</dimen>
     <dimen name="widget_text_size">16sp</dimen>
 
-    <!-- menu recyclerview item offsets [pixels]-->
+    <!-- recyclerview items -->
     <integer name="vert_offset">20</integer>
     <integer name="horiz_offset">100</integer>
     <dimen name="item_width">200dp</dimen>
     <dimen name="text_margin">16dp</dimen>
-    <dimen name="product_list_horiz_margin">4dp</dimen>
-    <dimen name="product_list_vert_margin">4dp</dimen>
-    <dimen name="product_list_item_horiz_margin">4dp</dimen>
-    <dimen name="product_list_item_vert_margin">4dp</dimen>
+    <dimen name="list_horiz_margin">4dp</dimen>
+    <dimen name="list_vert_margin">4dp</dimen>
+    <dimen name="list_item_horiz_margin">4dp</dimen>
+    <dimen name="list_item_vert_margin">4dp</dimen>
+    <dimen name="list_item_text_size">38sp</dimen>
 
     <!-- main list activity -->
     <!-- Picasso resize dimensions, appbar image -->
@@ -60,7 +61,7 @@
     <integer name="ydim">380</integer>
 
     <!-- detail activity -->
-    <dimen name="detail_screen_iv_height">300dp</dimen>
+    <dimen name="detail_screen_iv_height">200dp</dimen>
 
     <!-- create a plan viewpager fragment screens -->
     <!-- menu item recyclerview -->
