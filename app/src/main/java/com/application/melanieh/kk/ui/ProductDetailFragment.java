@@ -77,6 +77,7 @@ public class ProductDetailFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
 
 //        transitionImageUrlString = getArguments().getString(Constants.TRANSITION_IMAGE_KEY);
         transitionImageResId = R.drawable.candle_category_sample;

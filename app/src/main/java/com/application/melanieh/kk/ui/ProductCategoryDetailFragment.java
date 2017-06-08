@@ -61,6 +61,7 @@ public class ProductCategoryDetailFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         Timber.d("onCreate:");
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         categoryProducts = new ArrayList<>();
 
         /** populate category products list **/

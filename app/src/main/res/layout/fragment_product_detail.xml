@@ -39,5 +39,16 @@
         android:layout_height="wrap_content">
     </android.widget.Spinner>
 
+    <Button
+        android:id="@+id/add_to_cart_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/vert_margin"
+        android:layout_marginBottom="@dimen/vert_margin"
+        android:layout_marginLeft="@dimen/horiz_margin"
+        android:layout_marginRight="@dimen/horiz_margin"
+        android:text="@string/add_to_cart_btn_text"
+        android:drawableLeft="@drawable/add_to_cart_btn" />
 
 </LinearLayout>

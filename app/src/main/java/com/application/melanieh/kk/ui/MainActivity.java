@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -64,6 +66,23 @@ public class MainActivity extends AppCompatActivity {
         productItemRV.setLayoutManager(rvLayoutManager);
         productItemRV.setAdapter(menuImageAdapter);
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_universal, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.view_cart:
+                Intent launchCartView = new Intent(this, ShoppingCartActivity.class);
+                startActivity(launchCartView);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private RecyclerView.LayoutManager getLayoutManager() {

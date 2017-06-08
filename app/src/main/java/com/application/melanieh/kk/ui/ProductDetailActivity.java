@@ -1,8 +1,11 @@
 package com.application.melanieh.kk.ui;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.application.melanieh.kk.Constants;
 import com.application.melanieh.kk.R;
@@ -32,4 +35,22 @@ public class ProductDetailActivity extends AppCompatActivity {
 //                .addToBackStack(null)
 //                .commit();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_universal, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.view_cart:
+                Intent launchCartView = new Intent(this, ShoppingCartActivity.class);
+                startActivity(launchCartView);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }

@@ -22,7 +22,10 @@
 
     <!-- overflow menu -->
     <string name="pref_settings" translatable="false">View User Settings</string>
-    <string name="menu_view_pref_settings" translatable="false">View User Settings</string>
+    <string name="menu_view_cart" translatable="false">View Cart</string>
+
+    <!-- product detail screen -->
+    <string name="add_to_cart_btn_text">Add To Cart</string>
 
     <!-- notifications -->
 
