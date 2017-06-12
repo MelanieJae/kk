@@ -72,4 +72,7 @@ public class Constants {
     public static final int CHANUKAH = 315;
     public static final int CHRISTMAS = 316;
 
+    /** Shopify SDK/API **/
+    public static final String MERCHANT_NAME="Kountry Klutter";
+
 }

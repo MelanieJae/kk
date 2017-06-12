@@ -1,6 +1,7 @@
 package com.application.melanieh.kk.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.application.melanieh.kk.CartItem;
@@ -27,6 +29,8 @@ public class ShoppingCartFragment extends Fragment {
 
     @BindView(R.id.cart_item_rv)
     RecyclerView cart_item_rv;
+    @BindView(R.id.checkout_send_order_btn)
+    Button checkoutSendOrderBtn;
 
     RecyclerView.LayoutManager rvLayoutManager;
     CartItemRVAdapter cartItemRVAdapter;
@@ -51,6 +55,16 @@ public class ShoppingCartFragment extends Fragment {
         cartItemRVAdapter = new CartItemRVAdapter(getContext(), cartItems);
         cart_item_rv.setLayoutManager(getLayoutManager());
         cart_item_rv.setAdapter(cartItemRVAdapter);
+
+        checkoutSendOrderBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent launchCheckout = new Intent(getContext(), CheckoutActivity.class);
+                startActivity(launchCheckout);
+            }
+        });
+
+
         return rootView;
     }
 
