@@ -8,6 +8,7 @@
     <string name="dialog_yes_btn">Yes</string>
     <string name="dialog_ok_btn">OK</string>
     <string name="dialog_no_btn">No</string>
+    <string name="app_text_font_family">sans-serif-condensed</string>
 
     <string name="emptyview_no_results">Sorry, there are no results to display</string>
     <string name="emptyview_no_internet_connection">
@@ -26,6 +27,12 @@
 
     <!-- product detail screen -->
     <string name="add_to_cart_btn_text">Add To Cart</string>
+
+    <!-- shopping cart -->
+    <string name="total_item_price_heading">Total Item Price:  </string>
+    <string name="qty_heading">Quantity: </string>
+    <string name="cart_item_remove_btn">Remove</string>
+    <string name="checkout_send_order_btn">Checkout/Send Order</string>
 
     <!-- notifications -->
 

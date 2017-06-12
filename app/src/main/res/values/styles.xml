@@ -8,21 +8,38 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="ProductCategoryLabel">
-        <item name="android:fontFamily">sans-serif-condensed</item>
+    <style name="ProductTextStyle">
+        <item name="android:fontFamily">@string/app_text_font_family</item>
         <item name="android:textSize">@dimen/list_item_text_size</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:layout_marginLeft">8dp</item>
-        <item name="android:gravity">bottom</item>
     </style>
 
-    <style name="ProductCategoryLabelw600dp" parent="ProductCategoryLabel">
+    <style name="ProductTextStyleCart" parent="ProductTextStyle">
+        <item name="android:textSize">@dimen/cart_item_text_size</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:gravity">top</item>
+    </style>
+
+    <style name="ProductTextStylew600dp" parent="ProductTextStyle">
         <item name="android:layout_marginLeft">8dp</item>
     </style>
 
-    <style name="ProductCategoryLabelw900dp" parent="ProductCategoryLabel">
+    <style name="ProductTextStylew900dp" parent="ProductTextStyle">
         <item name="android:textSize">42sp</item>
         <item name="android:layout_marginLeft">8dp</item>
     </style>
+
+    <style name="ProductTextStyleCartw600dp" parent="ProductTextStyleCart">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:gravity">top</item>
+    </style>
+
+
+    <style name="ProductTextStyleCartw900dp" parent="ProductTextStyleCart">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:gravity">top</item>
+    </style>
+
 
 </resources>

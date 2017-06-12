@@ -26,13 +26,13 @@
             android:orientation="vertical">
 
             <TextView
-                style="@style/ProductCategoryLabel"
+                style="@style/ProductTextStyle"
                 android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
             <TextView
-                style="@style/ProductCategoryLabel"
+                style="@style/ProductTextStyle"
                 android:id="@+id/cost"
                 android:textSize="32sp"
                 android:layout_width="match_parent"

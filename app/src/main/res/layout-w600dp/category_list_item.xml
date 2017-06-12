@@ -16,7 +16,7 @@
         android:layout_marginBottom="@dimen/list_item_vert_margin" />
 
     <TextView
-        style="@style/ProductCategoryLabelw600dp"
+        style="@style/ProductTextStylew600dp"
         android:id="@+id/product_category_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

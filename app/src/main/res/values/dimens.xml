@@ -45,8 +45,6 @@
     <dimen name="widget_text_size">16sp</dimen>
 
     <!-- recyclerview items -->
-    <integer name="vert_offset">20</integer>
-    <integer name="horiz_offset">100</integer>
     <dimen name="item_width">200dp</dimen>
     <dimen name="text_margin">16dp</dimen>
     <dimen name="list_horiz_margin">4dp</dimen>
@@ -54,6 +52,13 @@
     <dimen name="list_item_horiz_margin">4dp</dimen>
     <dimen name="list_item_vert_margin">4dp</dimen>
     <dimen name="list_item_text_size">32sp</dimen>
+    <dimen name="card_item_elevation">4dp</dimen>
+    <dimen name="card_item_layout_margin">6dp</dimen>
+    <dimen name="card_item_corner_radius">3dp</dimen>
+    <dimen name="cart_item_text_size">28sp</dimen>
+    <dimen name="item_grid_cell_width_label">250dp</dimen>
+    <dimen name="item_grid_cell_width_value">100dp</dimen>
+    <dimen name="item_grid_cell_height">60dp</dimen>
 
     <!-- main list activity -->
     <!-- Picasso resize dimensions, appbar image -->

@@ -16,7 +16,7 @@
         android:layout_marginBottom="@dimen/list_item_vert_margin" />
 
     <TextView
-        style="@style/ProductCategoryLabel"
+        style="@style/ProductTextStyle"
         android:id="@+id/product_category_label"
         android:gravity="bottom"
         android:layout_width="match_parent"

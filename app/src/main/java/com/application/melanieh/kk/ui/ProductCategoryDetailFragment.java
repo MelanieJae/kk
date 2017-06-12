@@ -158,7 +158,7 @@ public class ProductCategoryDetailFragment extends Fragment {
         public ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             Timber.d("onCreateViewHolder:");
 
-            View view = LayoutInflater.from(parent.getContext())
+            View view = LayoutInflater.from(context)
                     .inflate(R.layout.product_list_item, parent, false);
             return new ProductViewHolder(view);
         }

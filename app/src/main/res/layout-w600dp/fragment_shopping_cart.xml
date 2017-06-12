@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/cart_item_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </android.support.v7.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/rv_emptyview_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|center_horizontal"/>
+
+        <Button
+            style="@style/ProductTextStyleCart"
+            android:id="@+id/checkout_send_order_btn"
+            android:text="@string/checkout_send_order_btn"
+            android:gravity="center_horizontal"
+            tools:text="Checkout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_grid_cell_height" />
+    </LinearLayout>
+
+</ScrollView>

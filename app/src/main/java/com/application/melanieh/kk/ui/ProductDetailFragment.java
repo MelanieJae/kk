@@ -140,13 +140,7 @@ public class ProductDetailFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selection = (String) parent.getItemAtPosition(position);
                 if (!TextUtils.isEmpty(selection)) {
-//                    if (selection.equals(getString(R.string.gender_male))) {
-//                        mGender = PetEntry.GENDER_MALE;
-//                    } else if (selection.equals(getString(R.string.gender_female))) {
-//                        mGender = PetEntry.GENDER_FEMALE;
-//                    } else {
-//                        mGender = PetEntry.GENDER_UNKNOWN;
-//                    }
+
                 }
             }
 
