@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.IntegerRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,9 +18,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.application.melanieh.kk.CartItem;
 import com.application.melanieh.kk.Constants;
+import com.application.melanieh.kk.KKApplication;
 import com.application.melanieh.kk.Product;
 import com.application.melanieh.kk.R;
+import com.stripe.wrap.pay.utils.CartManager;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
@@ -43,7 +47,7 @@ public class ProductCategoryDetailFragment extends Fragment {
     @NonNull @BindView(R.id.category_products_rv)
     RecyclerView categoryProductsRV;
     static String category;
-
+    static ArrayList<CartItem> cartItems;
     // necessary for using ButterKnife in recycler view
     Unbinder unbinder;
 
@@ -64,6 +68,15 @@ public class ProductCategoryDetailFragment extends Fragment {
         setHasOptionsMenu(true);
         categoryProducts = new ArrayList<>();
 
+        /** initialize shopping cart array list here
+         * so it is not re-created in the product detail screen each time a new product
+         * is added to the cart;
+         * this also makes transferring the items here (i.e. the CartItemArrayList) into a CartManager
+         * object simpler
+         *
+         */
+
+        cartItems = new ArrayList<>();
         /** populate category products list **/
         category = getActivity().getIntent().getStringExtra(Constants.CATEGORY_EXTRA_KEY);
 
@@ -187,6 +200,7 @@ public class ProductCategoryDetailFragment extends Fragment {
                     launchproductDetail.putExtra(Constants.TRANSITION_TEXT_KEY_NAME, productName);
                     launchproductDetail.putExtra(Constants.TRANSITION_TEXT_KEY_COST, cost);
                     launchproductDetail.putExtra(Constants.TRANSITION_IMAGE_KEY, imageResId);
+                    launchproductDetail.putExtra(Constants.CART_ITEMS_KEY, cartItems);
                     context.startActivity(launchproductDetail);
                 }
             });

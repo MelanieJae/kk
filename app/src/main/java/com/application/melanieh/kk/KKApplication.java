@@ -5,6 +5,8 @@ import android.app.Application;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Logger;
 import com.google.android.gms.analytics.Tracker;
+import com.stripe.wrap.pay.*;
+import com.stripe.wrap.pay.utils.CartManager;
 
 /**
  * Created by melanieh on 5/22/17.
@@ -29,6 +31,10 @@ public class KKApplication extends Application {
             // enable auto-logging
             ga.getLogger().setLogLevel(Logger.LogLevel.VERBOSE);
         }
+    }
+
+    public AndroidPayConfiguration initializeAndroidPayConfig() {
+        return AndroidPayConfiguration.init(BuildConfig.STRIPE_TEST_PUBLISHABLE_KEY, "USD");
     }
 
 }

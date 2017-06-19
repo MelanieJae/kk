@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.application.melanieh.kk.KKApplication;
 import com.application.melanieh.kk.R;
 import com.application.melanieh.kk.Constants;
 
@@ -43,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         Timber.plant(new Timber.DebugTree());
+
+        // start Analytics tracking
+        ((KKApplication) getApplication()).startTracking();
 
 //        /** populate sample image grid */
 //        imageList = new ArrayList<String>();
@@ -78,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.view_cart:
-                Intent launchCartView = new Intent(this, ShoppingCartActivity.class);
+                Intent launchCartView = new Intent(this, CheckoutActivity.class);
                 startActivity(launchCartView);
                 return true;
         }
@@ -127,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
             holder.gridItemIV.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     Intent launchProductsList = new Intent(MainActivity.this, ProductCategoryDetailActivity.class);
                     launchProductsList.setAction(Intent.ACTION_VIEW);
                     launchProductsList.putExtra(Constants.CATEGORY_EXTRA_KEY, "candles");

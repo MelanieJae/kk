@@ -24,7 +24,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 //        int imageResId = getIntent().getIntExtra(Constants.TRANSITION_IMAGE_KEY, -1);
 //        String productName = getIntent().getStringExtra(Constants.TRANSITION_TEXT_KEY_NAME);
 //        String cost = getIntent().getStringExtra(Constants.TRANSITION_TEXT_KEY_COST);
-//
+
 //        Timber.d("imageResId: " + imageResId);
 //        Timber.d("productName: " + productName);
 //        Timber.d("cost: " + cost);
@@ -42,15 +42,6 @@ public class ProductDetailActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.view_cart:
-                Intent launchCartView = new Intent(this, ShoppingCartActivity.class);
-                startActivity(launchCartView);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
 
 }

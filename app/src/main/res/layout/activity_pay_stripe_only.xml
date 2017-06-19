@@ -4,16 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.application.melanieh.kk.ui.CheckoutActivity">
+    tools:context="com.application.melanieh.kk.commerce.PaywStripeOnlyActivity">
 
-    <fragment
-        android:id="@+id/androidPayButtonFragment"
+    <TextView
+        android:id="@+id/pay_with_stripe_card_input_screen"
+        android:text="Future Stripe card input screen"
+        android:gravity="center_horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
-    <fragment
-        android:id="@+id/stripeOnlyPayButtonFragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:name="com.application.melanieh.kk.ui.AddToCartBtnFragment"/>
 </android.support.constraint.ConstraintLayout>

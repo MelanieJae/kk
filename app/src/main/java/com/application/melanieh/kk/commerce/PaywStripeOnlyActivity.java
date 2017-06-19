@@ -1,15 +1,15 @@
-package com.application.melanieh.kk.ui;
+package com.application.melanieh.kk.commerce;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.application.melanieh.kk.R;
 
-public class ShoppingCartActivity extends AppCompatActivity {
+public class PaywStripeOnlyActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_shopping_cart);
+        setContentView(R.layout.activity_pay_stripe_only);
     }
 }

@@ -14,19 +14,21 @@ public class ProductCategoryDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_detail);
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_universal, menu);
         return super.onCreateOptionsMenu(menu);
+
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.view_cart:
-                Intent launchCartView = new Intent(this, ShoppingCartActivity.class);
+                Intent launchCartView = new Intent(this, CheckoutActivity.class);
                 startActivity(launchCartView);
                 return true;
         }

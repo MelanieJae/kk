@@ -11,6 +11,8 @@ public class Constants {
     }
 
     /** fragment argument and intent extra keys **/
+    public static final String CART_ITEMS_KEY = "Empty cart";
+    public static final String DOMESTIC_SHIP_EST_KEY = "Domestic shipping estimate";
     public static final String CATEGORY_EXTRA_KEY = "transition image URL string";
     public static final String TRANSITION_IMAGE_KEY = "transition image URL string";
     public static final String TRANSITION_TEXT_KEY_NAME = "transition text-product name";
@@ -74,5 +76,8 @@ public class Constants {
 
     /** Shopify SDK/API **/
     public static final String MERCHANT_NAME="Kountry Klutter";
+
+    /** Stripe/Android Pay integration **/
+    public static final String STRIPE_CURRENCY_CODE = "USD";
 
 }

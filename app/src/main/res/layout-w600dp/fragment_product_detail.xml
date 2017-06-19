@@ -64,6 +64,20 @@
                 android:backgroundTint="@color/colorPrimaryDark" />
         </LinearLayout>
 
+        <TextView
+            style="@style/ProductTextStyleCartDark"
+            android:id="@+id/cust_notes_heading"
+            android:text="@string/qty_heading"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@id/cust_requests_notes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimaryDark" />
+
         <Button
             android:id="@+id/add_to_cart_btn"
             android:layout_width="match_parent"

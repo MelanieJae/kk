@@ -1,21 +1,30 @@
 package com.application.melanieh.kk.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IntegerRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.application.melanieh.kk.CartItem;
 import com.application.melanieh.kk.Constants;
 import com.application.melanieh.kk.R;
+import com.application.melanieh.kk.commerce.AndroidPaywStripeActivity;
+import com.stripe.wrap.pay.activity.StripeAndroidPayActivity;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,11 +45,18 @@ public class ProductDetailFragment extends Fragment {
     TextView cost;
     @BindView(R.id.product_variety_spinner)
     Spinner variety_spinner;
+    @BindView(R.id.add_to_cart_btn)
+    Button addToCartBtn;
+    @BindView(R.id.qty_value)
+    EditText qtyValueET;
+    @BindView(R.id.cust_requests_notes)
+    EditText customerNotesET;
 
     String transitionImageUrlString;
     String transitionNameText;
     String transitionCostText;
     int transitionImageResId;
+    ArrayList<CartItem> cartItems;
 
     private static int variety = 0;
 
@@ -80,9 +96,24 @@ public class ProductDetailFragment extends Fragment {
         setHasOptionsMenu(true);
 
 //        transitionImageUrlString = getArguments().getString(Constants.TRANSITION_IMAGE_KEY);
+        cartItems = getActivity().getIntent().getParcelableArrayListExtra(Constants.CART_ITEMS_KEY);
         transitionImageResId = R.drawable.candle_category_sample;
         transitionNameText = "Tealights";
         transitionCostText = "$1";
+        cartItems = new ArrayList<>();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.view_cart:
+
+                Intent launchCartView = new Intent(getContext(), AndroidPaywStripeActivity.class);
+                launchCartView.putExtra(Constants.CART_ITEMS_KEY, cartItems);
+                startActivity(launchCartView);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Nullable
@@ -92,12 +123,19 @@ public class ProductDetailFragment extends Fragment {
         Timber.d("onCreateView:");
 
         View rootView = inflater.inflate(R.layout.fragment_product_detail, container, false);
-//        unbinder = ButterKnife.bind(getActivity(), rootView);
-//        ButterKnife.bind(getActivity());
-        productImage = (ImageView)rootView.findViewById(R.id.product_iv);
-        productName = (TextView)rootView.findViewById(R.id.name);
-        cost = (TextView)rootView.findViewById(R.id.cost);
-        variety_spinner = (Spinner)rootView.findViewById(R.id.product_variety_spinner);
+        ButterKnife.bind(getActivity(), rootView);
+
+//        productImage = (ImageView)rootView.findViewById(R.id.product_iv);
+//        productName = (TextView)rootView.findViewById(R.id.name);
+//        cost = (TextView)rootView.findViewById(R.id.cost);
+//        variety_spinner = (Spinner)rootView.findViewById(R.id.product_variety_spinner);
+//        addToCartBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                cartItems.add(new CartItem(transitionNameText, Integer.parseInt(qtyValueET.getText().toString()),
+//                        Double.parseDouble(transitionCostText), customerNotesET.getText().toString(), 1.00));
+//            }
+//        });
 
 //        Timber.d("productImage: " + productImage.toString());
 //        Timber.d("productName: " + productName.toString());
@@ -106,18 +144,18 @@ public class ProductDetailFragment extends Fragment {
 //                fit().centerCrop().into(productImage);
 
 
-        productImage.setImageResource(transitionImageResId);
+        productImage.setImageResource(R.drawable.candle_category_sample);
         productName.setText(transitionNameText);
         cost.setText(transitionCostText);
         loadSpinner();
         return rootView;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+//    @Override
+//    public void onDestroyView() {
+//        super.onDestroyView();
 //        unbinder.unbind();
-    }
+//    }
 
     /**
      * Setup the dropdown spinner containing the available varieties of the product.

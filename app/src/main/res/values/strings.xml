@@ -32,7 +32,7 @@
     <string name="total_item_price_heading">Total Item Price:  </string>
     <string name="qty_heading">Quantity: </string>
     <string name="cart_item_remove_btn">Remove</string>
-    <string name="checkout_send_order_btn">Checkout/Send Order</string>
+    <string name="checkout_send_order_btn">Checkout</string>
 
     <!-- notifications -->
 
