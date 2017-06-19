@@ -41,5 +41,9 @@
         <item name="android:gravity">top</item>
     </style>
 
+    <style name="ProductTextStyleCartDark" parent="ProductTextStyleCart">
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
+
 
 </resources>

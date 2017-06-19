@@ -18,6 +18,10 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+        <!-- Stripe-Android Pay integration -->
+        <meta-data
+            android:name="com.google.android.gms.wallet.api.enabled"
+            android:value="true" />
 
         <!-- Facebook Graph API -->
         <meta-data
@@ -34,7 +38,6 @@
         <activity android:name=".ui.ProductCategoryDetailActivity" />
         <activity android:name=".ui.ProductDetailActivity" />
         <activity android:name=".ui.ShoppingCartActivity" />
-        <activity android:name=".ui.CheckoutActivity"></activity>
     </application>
 
 </manifest>

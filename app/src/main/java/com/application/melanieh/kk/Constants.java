@@ -17,7 +17,7 @@ public class Constants {
     public static final String TRANSITION_TEXT_KEY_COST = "transition text-product cost";
 
     /** sample image */
-    public static final String SAMPLE_IMAGE_URL = BuildConfig.SAMPLE_IMAGE_URL;
+//    public static final String SAMPLE_IMAGE_URL = BuildConfig.SAMPLE_IMAGE_URL;
 
     /** query String for downloading photos from business' Facebook page **/
     public static final String FB_GRAPH_API_QUERY_STRING

@@ -59,8 +59,8 @@ public class ShoppingCartFragment extends Fragment {
         checkoutSendOrderBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent launchCheckout = new Intent(getContext(), CheckoutActivity.class);
-                startActivity(launchCheckout);
+//                Intent launchCheckout = new Intent(getContext(), StripePayActivity.class);
+//                startActivity(launchCheckout);
             }
         });
 
