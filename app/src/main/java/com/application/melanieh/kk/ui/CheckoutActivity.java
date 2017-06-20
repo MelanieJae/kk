@@ -2,7 +2,9 @@ package com.application.melanieh.kk.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.application.melanieh.kk.CartItem;
@@ -11,10 +13,17 @@ import com.application.melanieh.kk.KKApplication;
 import com.application.melanieh.kk.commerce.AndroidPaywStripeActivity;
 import com.application.melanieh.kk.commerce.PaywStripeOnlyActivity;
 import com.google.android.gms.wallet.Cart;
+import com.google.android.gms.wallet.MaskedWallet;
+import com.google.android.gms.wallet.WalletConstants;
+import com.google.android.gms.wallet.fragment.SupportWalletFragment;
+import com.google.android.gms.wallet.fragment.WalletFragmentMode;
+import com.google.android.gms.wallet.fragment.WalletFragmentOptions;
+import com.google.android.gms.wallet.fragment.WalletFragmentStyle;
 import com.stripe.wrap.pay.AndroidPayConfiguration;
 import com.stripe.wrap.pay.activity.StripeAndroidPayActivity;
 import com.stripe.wrap.pay.utils.CartContentException;
 import com.stripe.wrap.pay.utils.CartManager;
+import com.application.melanieh.kk.R;
 
 import java.util.ArrayList;
 
@@ -76,15 +85,43 @@ public class CheckoutActivity extends StripeAndroidPayActivity {
 
     @Override
     protected void onAndroidPayAvailable() {
-        Intent intent = new Intent(this, AndroidPaywStripeActivity.class)
-                .putExtra(StripeAndroidPayActivity.EXTRA_CART, cart);
-        startActivity(intent);
+        WalletFragmentStyle walletFragmentStyle = new WalletFragmentStyle()
+                .setBuyButtonText(WalletFragmentStyle.BuyButtonText.BUY_WITH)
+                .setBuyButtonAppearance(WalletFragmentStyle.BuyButtonAppearance.ANDROID_PAY_DARK)
+                .setBuyButtonWidth(WalletFragmentStyle.Dimension.MATCH_PARENT);
+
+        WalletFragmentOptions walletFragmentOptions = WalletFragmentOptions.newBuilder()
+                .setEnvironment(Constants.WALLET_ENVIRONMENT)
+                .setFragmentStyle(walletFragmentStyle)
+                .setTheme(WalletConstants.THEME_LIGHT)
+                .setMode(WalletFragmentMode.BUY_BUTTON)
+                .build();
+        SupportWalletFragment androidPayWalletFragment = SupportWalletFragment.newInstance(walletFragmentOptions);
+        addBuyButtonWalletFragment(androidPayWalletFragment);
     }
 
     @Override
     protected void onAndroidPayNotAvailable() {
+
         Intent intent = new Intent(this, PaywStripeOnlyActivity.class)
-                .putExtra(StripeAndroidPayActivity.EXTRA_CART, cart);
+                .putExtra(Constants.CART_ITEMS_KEY, cart);
         startActivity(intent);
     }
+
+    @Override
+    protected void addBuyButtonWalletFragment(@NonNull SupportWalletFragment walletFragment) {
+        FragmentTransaction buttonTransaction = getSupportFragmentManager().beginTransaction();
+        buttonTransaction.replace(R.id.androidPayButtonFragment, walletFragment).commit();
+    }
+
+//    @Override
+//    protected void onMaskedWalletRetrieved(@Nullable MaskedWallet maskedWallet) {
+//        super.onMaskedWalletRetrieved(maskedWallet);
+//        if (maskedWallet != null) {
+//            mPossibleConfirmedMaskedWallet = maskedWallet;
+//
+//            // This is a good place to update your displayed information
+//            updatePaymentInformation(mPossibleConfirmedMaskedWallet);
+//        }
+//    }
 }

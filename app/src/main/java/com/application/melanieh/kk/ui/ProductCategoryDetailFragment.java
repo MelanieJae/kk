@@ -42,8 +42,6 @@ import timber.log.Timber;
 
 public class ProductCategoryDetailFragment extends Fragment {
 
-    @BindView(R.id.product_iv)
-    ImageView productCategoryIV;
     @NonNull @BindView(R.id.category_products_rv)
     RecyclerView categoryProductsRV;
     static String category;

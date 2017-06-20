@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Button
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/pay_with_stripe_btn"
+    android:id="@+id/add_to_cart_btn"
     android:layout_width="match_parent"
     android:layout_height="60dp"
     android:layout_gravity="center_horizontal"
@@ -9,5 +9,5 @@
     android:layout_marginBottom="@dimen/vert_margin"
     android:layout_marginLeft="@dimen/horiz_margin"
     android:layout_marginRight="@dimen/horiz_margin"
-    android:text="@string/stripe_only_pay_btn_text"
+    android:text="@string/add_to_cart_btn_text"
     android:drawableLeft="@drawable/add_to_cart_btn" />

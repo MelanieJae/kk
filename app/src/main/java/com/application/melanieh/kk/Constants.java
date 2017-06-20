@@ -1,5 +1,7 @@
 package com.application.melanieh.kk;
 
+import com.google.android.gms.wallet.WalletConstants;
+
 /**
  * Created by melanieh on 5/30/17.
  */
@@ -79,5 +81,6 @@ public class Constants {
 
     /** Stripe/Android Pay integration **/
     public static final String STRIPE_CURRENCY_CODE = "USD";
+    public static final int WALLET_ENVIRONMENT = WalletConstants.ENVIRONMENT_TEST;
 
 }

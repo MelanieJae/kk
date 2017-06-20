@@ -27,10 +27,10 @@
 
     <!-- product detail screen -->
     <string name="add_to_cart_btn_text">Add To Cart</string>
-
-    <!-- shopping cart -->
+    <string name="stripe_only_pay_btn_text">Pay with Stripe</string>
     <string name="total_item_price_heading">Total Item Price:  </string>
-    <string name="qty_heading">Quantity: </string>
+    <string name="qty_label">Quantity: </string>
+    <string name="cust_notes_label">Customer Notes: </string>
     <string name="cart_item_remove_btn">Remove</string>
     <string name="checkout_send_order_btn">Checkout</string>
 

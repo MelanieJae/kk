@@ -28,53 +28,16 @@ public class AndroidPaywStripeActivity extends StripeAndroidPayActivity {
     public AndroidPaywStripeActivity() {
     }
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // initialize Android Pay configuration; must be done before accessing singleton
-        ((KKApplication) getApplication()).initializeAndroidPayConfig();
-
-        // require user to enter shipping address
-        AndroidPayConfiguration.getInstance().setShippingAddressRequired(true);
-
-        // transfer items from customized cart to a Stripe Cart Manager object
-        ArrayList<CartItem> cartItems = getIntent().getParcelableArrayListExtra(Constants.CART_ITEMS_KEY);
-        CartManager cartManager = new CartManager();
-
-        for (int i = 0; i < cartItems.size(); i++) {
-            CartItem currentCartItem = cartItems.get(i);
-            cartManager.addLineItem
-                    (currentCartItem.getItemName(),
-                            currentCartItem.getItemQty(),
-                            Long.parseLong("" + currentCartItem.getItemUnitPrice()));
-
-            // Add a shipping line item
-            cartManager.addShippingLineItem(Constants.DOMESTIC_SHIP_EST_KEY,
-                    Long.parseLong("" + currentCartItem.getShippingEstimate()));
-            // Set the tax line item - there can be only one;
-            // TODO: CHANGE POINTER TO JUST getUnitPrice once taxes are set elsewhere
-            cartManager.setTaxLineItem("Tax",
-                    Long.parseLong("" + 0.07 * currentCartItem.getItemUnitPrice()));
-        }
-
-        /** make sure a valid Google Play Services/Android pay cart can be created from these line items
-         * */
-
-        try {
-            cart = cartManager.buildCart();
-        } catch (CartContentException unexpected) {
-            Timber.wtf(unexpected,
-                    "Valid cart cannot be created. Bad line items detected or bad total price string for the cart");
-        }
 
     }
 
     @Override
     protected void onAndroidPayAvailable() {
-        Intent intent = new Intent(this, AndroidPaywStripeActivity.class)
-                .putExtra(StripeAndroidPayActivity.EXTRA_CART, cart);
-        startActivity(intent);
+
     }
 
     @Override
