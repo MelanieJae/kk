@@ -14,11 +14,13 @@
         android:name="com.application.melanieh.kk.ui.ProductDetailFragment"/>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_anchor="@id/productDetailFragment"
-        app:layout_anchorGravity="bottom|right">
+        app:layout_anchorGravity="bottom|right"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp">
 
         <fragment
             android:id="@+id/addToCartBtnFragment"
@@ -32,11 +34,6 @@
             android:layout_height="wrap_content"
             android:name="com.application.melanieh.kk.ui.PayWithStripeBtnFragment"/>
 
-        <fragment
-            android:id="@+id/androidPayButtonFragment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:name="com.google.android.gms.wallet.fragment.SupportWalletFragment"/>
     </LinearLayout>
 
 

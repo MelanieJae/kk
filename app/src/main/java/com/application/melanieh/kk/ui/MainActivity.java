@@ -18,6 +18,8 @@ import android.widget.TextView;
 import com.application.melanieh.kk.KKApplication;
 import com.application.melanieh.kk.R;
 import com.application.melanieh.kk.Constants;
+import com.stripe.wrap.pay.AndroidPayConfiguration;
+import com.stripe.wrap.pay.BuildConfig;
 
 import java.util.ArrayList;
 
@@ -47,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
 
         // start Analytics tracking
         ((KKApplication) getApplication()).startTracking();
+
+        // Android Pay Configuration initialization
+        ((KKApplication) getApplication()).initializeAndroidPayConfig();
 
 //        /** populate sample image grid */
 //        imageList = new ArrayList<String>();

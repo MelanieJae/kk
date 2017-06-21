@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.application.melanieh.kk.R;
@@ -21,7 +22,8 @@ import butterknife.Unbinder;
 public class PayWithStripeBtnFragment extends Fragment {
 
     Unbinder unbinder;
-    @OnClick(R.id.add_to_cart_btn)
+    Button stripePay;
+    @OnClick(R.id.pay_with_stripe_btn)
     public void onClick(View view) {
         // TODO: FINISH CODE
         Toast.makeText(getActivity(), "Pay with Stripe onClick works", Toast.LENGTH_SHORT).show();
@@ -42,6 +44,14 @@ public class PayWithStripeBtnFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_stripe_only_pay_button, container, false);
         unbinder = ButterKnife.bind(getActivity(), rootView);
+        stripePay = (Button)rootView.findViewById(R.id.pay_with_stripe_btn);
+        stripePay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "Pay with Stripe onClick works", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         return rootView;
     }
 

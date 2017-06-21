@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
@@ -27,6 +28,7 @@ import com.application.melanieh.kk.R;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
 import timber.log.Timber;
 
 /**
@@ -102,10 +104,6 @@ public class CheckoutActivity extends StripeAndroidPayActivity {
 
     @Override
     protected void onAndroidPayNotAvailable() {
-
-        Intent intent = new Intent(this, PaywStripeOnlyActivity.class)
-                .putExtra(Constants.CART_ITEMS_KEY, cart);
-        startActivity(intent);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.application.melanieh.kk.ui;
 
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -34,6 +36,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import timber.log.Timber;
 
@@ -50,8 +53,15 @@ public class ProductDetailFragment extends Fragment {
     TextView qtyLabel;
     EditText qtyValue;
     TextView custNotesLabel;
-    TextView custNotesTV;
+    EditText custNotesET;
+
+    InputMethodManager imm;
     private int variety = 0;
+
+    @OnClick({R.id.qty_value,R.id.cust_requests_notes})
+    public void onClick(View view) {
+        showKeyboard(view);
+    }
 
     public ProductDetailFragment() {
         //
@@ -61,6 +71,7 @@ public class ProductDetailFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
     }
 
     @Override
@@ -89,7 +100,13 @@ public class ProductDetailFragment extends Fragment {
         qtyLabel = (TextView)rootView.findViewById(R.id.qty_label);
         qtyValue = (EditText) rootView.findViewById(R.id.qty_value);
         custNotesLabel = (TextView)rootView.findViewById(R.id.cust_notes_label);
-        custNotesTV = (EditText) rootView.findViewById(R.id.cust_requests_notes);
+        custNotesET = (EditText) rootView.findViewById(R.id.cust_requests_notes);
+
+        //control visibility of keyboard to only show when customer notes and quantity fields are clicked on
+        imm = (InputMethodManager)getActivity().getSystemService(Service.INPUT_METHOD_SERVICE);
+        // default state for keyboard is hidden
+        imm.hideSoftInputFromWindow(qtyValue.getWindowToken(), 0);
+        imm.hideSoftInputFromWindow(custNotesET.getWindowToken(), 0);
 
         productImage.setImageResource(R.drawable.candle_category_sample);
         productName.setText("Tealights");
@@ -133,6 +150,11 @@ public class ProductDetailFragment extends Fragment {
                 variety = Constants.VARIETY_UNKNOWN;
             }
         });
+    }
+
+    private void showKeyboard(View view) {
+        // reveal keyboard for these
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
 }
