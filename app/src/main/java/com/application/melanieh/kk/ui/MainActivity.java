@@ -18,8 +18,7 @@ import android.widget.TextView;
 import com.application.melanieh.kk.KKApplication;
 import com.application.melanieh.kk.R;
 import com.application.melanieh.kk.Constants;
-import com.stripe.wrap.pay.AndroidPayConfiguration;
-import com.stripe.wrap.pay.BuildConfig;
+import com.application.melanieh.kk.commerce.CheckoutActivity;
 
 import java.util.ArrayList;
 

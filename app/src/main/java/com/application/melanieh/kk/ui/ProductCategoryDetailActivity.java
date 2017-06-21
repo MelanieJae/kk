@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.application.melanieh.kk.R;
+import com.application.melanieh.kk.commerce.CheckoutActivity;
 
 public class ProductCategoryDetailActivity extends AppCompatActivity {
 

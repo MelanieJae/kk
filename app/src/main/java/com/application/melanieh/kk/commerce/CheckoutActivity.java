@@ -1,19 +1,20 @@
-package com.application.melanieh.kk.ui;
+package com.application.melanieh.kk.commerce;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.application.melanieh.kk.BuildConfig;
+import com.application.melanieh.kk.CartItem;
 import com.application.melanieh.kk.Constants;
 import com.application.melanieh.kk.KKApplication;
-import com.application.melanieh.kk.R;
+import com.application.melanieh.kk.commerce.AndroidPaywStripeActivity;
+import com.application.melanieh.kk.commerce.PaywStripeOnlyActivity;
+import com.google.android.gms.wallet.Cart;
+import com.google.android.gms.wallet.MaskedWallet;
 import com.google.android.gms.wallet.WalletConstants;
 import com.google.android.gms.wallet.fragment.SupportWalletFragment;
 import com.google.android.gms.wallet.fragment.WalletFragmentMode;
@@ -21,33 +22,36 @@ import com.google.android.gms.wallet.fragment.WalletFragmentOptions;
 import com.google.android.gms.wallet.fragment.WalletFragmentStyle;
 import com.stripe.wrap.pay.AndroidPayConfiguration;
 import com.stripe.wrap.pay.activity.StripeAndroidPayActivity;
+import com.stripe.wrap.pay.utils.CartContentException;
+import com.stripe.wrap.pay.utils.CartManager;
+import com.application.melanieh.kk.R;
 
-import butterknife.BindInt;
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import timber.log.Timber;
 
-public class ProductDetailActivity extends StripeAndroidPayActivity {
+/**
+ * Created by melanieh on 6/19/17.
+ * Though this class routes both Android Pay and non-Android Pay payments,
+ * it extends StripeAndroidPayActivity because that class checks whether Android Pay
+ * is available upon creation, requiring less code.
+ */
+
+public class CheckoutActivity extends StripeAndroidPayActivity {
 
     SupportWalletFragment androidPayBtnFragment;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        Timber.d("onCreate");
-
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_product_detail);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_universal, menu);
-        return super.onCreateOptionsMenu(menu);
+        setContentView(R.layout.activity_checkout);
     }
 
     @Override
     protected void onAndroidPayAvailable() {
         Timber.d("Android Pay Available");
-                WalletFragmentStyle walletFragmentStyle = new WalletFragmentStyle()
+        WalletFragmentStyle walletFragmentStyle = new WalletFragmentStyle()
                 .setBuyButtonText(WalletFragmentStyle.BuyButtonText.BUY_WITH)
                 .setBuyButtonAppearance(WalletFragmentStyle.BuyButtonAppearance.ANDROID_PAY_DARK)
                 .setBuyButtonWidth(WalletFragmentStyle.Dimension.MATCH_PARENT);
@@ -59,23 +63,13 @@ public class ProductDetailActivity extends StripeAndroidPayActivity {
                 .setMode(WalletFragmentMode.BUY_BUTTON)
                 .build();
 
-           // for Android pay Button fragment
+        // for Android pay Button fragment
         androidPayBtnFragment = SupportWalletFragment.newInstance(walletFragmentOptions);
         addBuyButtonWalletFragment(androidPayBtnFragment);
     }
 
     @Override
     protected void onAndroidPayNotAvailable() {
-        Timber.d("Android Pay Not Available");
-        SetUpAndroidPayBtnFragment setUpAndroidPayBtnFragment =
-                SetUpAndroidPayBtnFragment.newInstance();
-        getSupportFragmentManager().beginTransaction().
-                replace(R.id.setUpAndroidPayBtnFragment, setUpAndroidPayBtnFragment).commit();
-    }
 
-    @Override
-    protected void addBuyButtonWalletFragment(@NonNull SupportWalletFragment walletFragment) {
-        FragmentTransaction buttonTransaction = getSupportFragmentManager().beginTransaction();
-        buttonTransaction.replace(R.id.androidPayButtonFragment, androidPayBtnFragment).commit();
     }
 }

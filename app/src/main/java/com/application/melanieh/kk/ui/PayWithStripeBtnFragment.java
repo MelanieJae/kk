@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.application.melanieh.kk.R;
+import com.google.android.gms.wallet.Cart;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -24,14 +25,11 @@ public class PayWithStripeBtnFragment extends Fragment {
     Unbinder unbinder;
     Button stripePay;
     @OnClick(R.id.pay_with_stripe_btn)
-    public void onClick(View view) {
-        // TODO: FINISH CODE
-        Toast.makeText(getActivity(), "Pay with Stripe onClick works", Toast.LENGTH_SHORT).show();
-
-    }
+    public void onClick(View view) {}
 
 
     public PayWithStripeBtnFragment() {
+        //
     }
 
     @Override
@@ -48,7 +46,7 @@ public class PayWithStripeBtnFragment extends Fragment {
         stripePay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "Pay with Stripe onClick works", Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -61,5 +59,6 @@ public class PayWithStripeBtnFragment extends Fragment {
         unbinder.unbind();
 
     }
+
 
 }

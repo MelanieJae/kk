@@ -4,16 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.application.melanieh.kk.ui.CheckoutActivity">
+    tools:context="com.application.melanieh.kk.commerce.CheckoutActivity">
 
     <fragment
-        android:id="@+id/androidPayButtonFragment"
+        android:id="@+id/shoppingCartFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
     <fragment
-        android:id="@+id/stripeOnlyPayButtonFragment"
+        android:id="@+id/continueShoppingBtnFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:name="com.application.melanieh.kk.ui.AddToCartBtnFragment"/>
+        android:layout_height="wrap_content"/>
+
+    <fragment
+        android:id="@+id/continueCheckoutFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
 </android.support.constraint.ConstraintLayout>

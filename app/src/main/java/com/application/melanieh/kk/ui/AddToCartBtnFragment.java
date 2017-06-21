@@ -77,11 +77,14 @@ public class AddToCartBtnFragment extends Fragment {
                 try {
                     Cart cart = cartManager.buildCart();
                     Timber.d("Cart: " + cart.toString());
-                    // send cart either to Stripe-only purchase flow or Android Pay
+                    // send cart either to Stripe-only purchase flow or Android Pay when listener observes
+                    // a click event on either button
+
 
                 } catch (CartContentException unexpected) {
                     Timber.wtf(unexpected,
-                            "Valid cart cannot be created. Bad line items detected or bad total price string for the cart");
+                            "Valid cart cannot be created. " +
+                                    "Bad line items detected or bad total price string for the cart");
                 }
 
                     }

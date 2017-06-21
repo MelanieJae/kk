@@ -28,11 +28,17 @@
     <!-- product detail screen -->
     <string name="add_to_cart_btn_text">Add To Cart</string>
     <string name="stripe_only_pay_btn_text">Pay with</string>
+    <string name="set_up_android_pay_btn_text">Set Up Android Pay</string>
     <string name="total_item_price_heading">Total Item Price:  </string>
     <string name="qty_label">Quantity: </string>
     <string name="cust_notes_label">Customer Notes: </string>
     <string name="cart_item_remove_btn">Remove</string>
     <string name="checkout_send_order_btn">Checkout</string>
+
+    <!-- checkout screen -->
+    <string name="android_pay_pkg_name">com.google.android.gms.wallet</string>
+    <string name="continue_shopping_btn_text">Continue Shopping</string>
+    <string name="continue_checkout_btn_text">Continue Checkout</string>
 
     <!-- notifications -->
 

@@ -34,6 +34,13 @@
             android:layout_height="wrap_content"
             android:name="com.application.melanieh.kk.ui.PayWithStripeBtnFragment"/>
 
+        <!-- only shows when Android Pay is not available/set up -->
+        <fragment
+            android:id="@+id/setUpAndroidPayBtnFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:name="com.application.melanieh.kk.ui.SetUpAndroidPayBtnFragment"/>
+
     </LinearLayout>
 
 
