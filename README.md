@@ -27,8 +27,9 @@ Google Play Services
 
 Analytics-track page views
 Fence- geofencing to provide context for any offers
-Payment
-
+Wallet
+Android Pay API
+Stripe payment processing
 
 # Build Notes
 
@@ -43,5 +44,6 @@ for shiping or in-store pickup.
 
 Image Credits:
 
-All images (c) NSBHappenings.com
+Android Pay logo, BrandsoftheWorld.com
+Stripe logo courtesy of Stripe, https://stripe.com/about/resources
 
