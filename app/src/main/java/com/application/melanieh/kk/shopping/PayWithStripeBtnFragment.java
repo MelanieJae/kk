@@ -1,5 +1,6 @@
-package com.application.melanieh.kk.ui;
+package com.application.melanieh.kk.shopping;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -7,10 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.application.melanieh.kk.R;
-import com.google.android.gms.wallet.Cart;
+import com.application.melanieh.kk.checkout.StripePayActivity;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -22,19 +22,22 @@ import butterknife.Unbinder;
 
 public class PayWithStripeBtnFragment extends Fragment {
 
+
     Unbinder unbinder;
     Button stripePay;
     @OnClick(R.id.pay_with_stripe_btn)
-    public void onClick(View view) {}
-
+    public void onClick(View view) {
+        Intent launchPayWithStripe = new Intent(getActivity(), StripePayActivity.class);
+        startActivity(launchPayWithStripe);
+    }
 
     public PayWithStripeBtnFragment() {
         //
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     }
 
     @Nullable
@@ -46,19 +49,12 @@ public class PayWithStripeBtnFragment extends Fragment {
         stripePay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent launchPayWithStripe = new Intent(getActivity(), StripePayActivity.class);
+                startActivity(launchPayWithStripe);
             }
         });
 
         return rootView;
     }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        unbinder.unbind();
-
-    }
-
 
 }

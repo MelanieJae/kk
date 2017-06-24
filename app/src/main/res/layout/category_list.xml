@@ -7,5 +7,5 @@
     android:layout_height="match_parent"
     android:layout_marginLeft="@dimen/list_horiz_margin"
     android:layout_marginRight="@dimen/list_horiz_margin"
-    tools:context="com.application.melanieh.kk.ui.MainActivity"
+    tools:context="com.application.melanieh.kk.shopping.MainActivity"
     tools:listitem="@layout/category_list_item" />

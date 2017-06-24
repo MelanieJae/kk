@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<com.stripe.android.view.CardInputWidget
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:stripe="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_input_widget"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.application.melanieh.kk.commerce.PaywStripeOnlyActivity">
+    stripe:cardTint="@android:color/holo_green_dark"
+    stripe:cardTextErrorColor="@android:color/holo_red_dark"/>
 
-    <TextView
-        android:id="@+id/pay_with_stripe_card_input_screen"
-        android:text="Future Stripe card input screen"
-        android:gravity="center_horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-</android.support.constraint.ConstraintLayout>

@@ -1,4 +1,4 @@
-package com.application.melanieh.kk.ui;
+package com.application.melanieh.kk.shopping;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,7 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.application.melanieh.kk.R;
-import com.application.melanieh.kk.commerce.CheckoutActivity;
+import com.application.melanieh.kk.checkout.CheckoutActivity;
 
 public class ProductCategoryDetailActivity extends AppCompatActivity {
 

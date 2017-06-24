@@ -29,16 +29,16 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name=".ui.MainActivity">
+        <activity android:name=".shopping.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.ProductCategoryDetailActivity" />
-        <activity android:name=".ui.ProductDetailActivity" />
-        <activity android:name=".commerce.PaywStripeOnlyActivity"></activity>
+        <activity android:name=".shopping.ProductCategoryDetailActivity" />
+        <activity android:name=".shopping.ProductDetailActivity" />
+        <activity android:name=".checkout.StripePayActivity"></activity>
 
         <!-- analytics -->
         <!--

@@ -1,4 +1,4 @@
-package com.application.melanieh.kk.ui;
+package com.application.melanieh.kk.shopping;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,19 +7,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.application.melanieh.kk.CartItem;
 import com.application.melanieh.kk.Constants;
+import com.application.melanieh.kk.EventBus;
 import com.application.melanieh.kk.R;
+import com.application.melanieh.kk.event.ButtonClickEvent;
 import com.google.android.gms.wallet.Cart;
 import com.stripe.wrap.pay.utils.CartContentException;
 import com.stripe.wrap.pay.utils.CartManager;
 
-import java.util.ArrayList;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import timber.log.Timber;
@@ -32,18 +29,24 @@ public class AddToCartBtnFragment extends Fragment {
 
     CartManager cartManager;
     Button addToCartButton;
+    // cart update event bus
+    EventBus eventBus;
 
     Unbinder unbinder;
     @OnClick(R.id.add_to_cart_btn)
-    public void onClick(View view) {}
+    public void onClick(View view) {
+        publishCart();
+    }
 
     public AddToCartBtnFragment() {
         //
     }
 
+    // fetch singleton of event bus to publish cart content
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        eventBus = ((ProductDetailActivity) getActivity()).getEventBusSingleton();
     }
 
     @Nullable
@@ -77,9 +80,8 @@ public class AddToCartBtnFragment extends Fragment {
                 try {
                     Cart cart = cartManager.buildCart();
                     Timber.d("Cart: " + cart.toString());
-                    // send cart either to Stripe-only purchase flow or Android Pay when listener observes
-                    // a click event on either button
-
+                    // publishes cart for subscribers/observers, i.e. the pay button fragments
+                    publishCart();
 
                 } catch (CartContentException unexpected) {
                     Timber.wtf(unexpected,
@@ -97,7 +99,6 @@ public class AddToCartBtnFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
-
     }
 
     private void getTaxAmt() {
@@ -108,5 +109,14 @@ public class AddToCartBtnFragment extends Fragment {
 
     private CartItem retrieveCartItem() {
         //TODO: FINISH CODE
-        return null;}
+        return null;
+    }
+
+    @Nullable
+    private void publishCart() {
+        if (eventBus.hasObservers()) {
+            eventBus.send(new ButtonClickEvent());
+        }
+    }
+
 }

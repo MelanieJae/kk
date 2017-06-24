@@ -1,4 +1,4 @@
-package com.application.melanieh.kk.ui;
+package com.application.melanieh.kk.shopping;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.application.melanieh.kk.KKApplication;
 import com.application.melanieh.kk.R;
 import com.application.melanieh.kk.Constants;
-import com.application.melanieh.kk.commerce.CheckoutActivity;
+import com.application.melanieh.kk.checkout.CheckoutActivity;
 
 import java.util.ArrayList;
 

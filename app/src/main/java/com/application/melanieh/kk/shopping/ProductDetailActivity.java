@@ -1,34 +1,27 @@
-package com.application.melanieh.kk.ui;
+package com.application.melanieh.kk.shopping;
 
-import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.application.melanieh.kk.BuildConfig;
 import com.application.melanieh.kk.Constants;
-import com.application.melanieh.kk.KKApplication;
+import com.application.melanieh.kk.EventBus;
 import com.application.melanieh.kk.R;
 import com.google.android.gms.wallet.WalletConstants;
 import com.google.android.gms.wallet.fragment.SupportWalletFragment;
 import com.google.android.gms.wallet.fragment.WalletFragmentMode;
 import com.google.android.gms.wallet.fragment.WalletFragmentOptions;
 import com.google.android.gms.wallet.fragment.WalletFragmentStyle;
-import com.stripe.wrap.pay.AndroidPayConfiguration;
 import com.stripe.wrap.pay.activity.StripeAndroidPayActivity;
 
-import butterknife.BindInt;
-import butterknife.BindView;
 import timber.log.Timber;
 
 public class ProductDetailActivity extends StripeAndroidPayActivity {
 
     SupportWalletFragment androidPayBtnFragment;
+    /** event bus for cart updates */
+    EventBus eventBus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +37,7 @@ public class ProductDetailActivity extends StripeAndroidPayActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    /** StripeAndroidPayActivity wrapper methods */
     @Override
     protected void onAndroidPayAvailable() {
         Timber.d("Android Pay Available");
@@ -78,4 +72,19 @@ public class ProductDetailActivity extends StripeAndroidPayActivity {
         FragmentTransaction buttonTransaction = getSupportFragmentManager().beginTransaction();
         buttonTransaction.replace(R.id.androidPayButtonFragment, androidPayBtnFragment).commit();
     }
+
+    /** RxAndroid event bus for cart update pub-sub pattern; GP Cart is the pub and the pay with stripe button
+     * and Android Pay button fragments are the subs. The eventbus singleton is used by the Pay with Stripe and Android Pay btn
+     * fragments.
+     */
+
+    // TODO: implement with Dagger
+    public EventBus getEventBusSingleton() {
+        if (eventBus == null) {
+            eventBus = new EventBus();
+        }
+
+        return eventBus;
+    }
+
 }

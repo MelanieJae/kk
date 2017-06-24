@@ -1,4 +1,4 @@
-package com.application.melanieh.kk.commerce;
+package com.application.melanieh.kk.checkout;
 
 import android.support.v4.app.Fragment;
 

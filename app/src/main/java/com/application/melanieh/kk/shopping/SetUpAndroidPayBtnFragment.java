@@ -1,4 +1,4 @@
-package com.application.melanieh.kk.ui;
+package com.application.melanieh.kk.shopping;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -11,8 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.application.melanieh.kk.R;
-
-import java.util.Set;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;

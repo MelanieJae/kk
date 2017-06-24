@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.application.melanieh.kk.ui.ShoppingCartActivity">
+    tools:context="com.application.melanieh.kk.shopping.ShoppingCartActivity">
 
     <fragment
         android:id="@+id/shoppingCartFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.application.melanieh.kk.ui.ShoppingCartFragment"/>
+        android:name="com.application.melanieh.kk.shopping.ShoppingCartFragment"/>
 
 
 

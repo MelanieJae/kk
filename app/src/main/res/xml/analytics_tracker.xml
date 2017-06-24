@@ -9,7 +9,7 @@
     <bool name="ga_autoActivityTracking">true</bool>
 
     <!-- screen name tags -->
-    <screenName name="com.application.melanieh.kk.ui.MainActivity">
+    <screenName name="com.application.melanieh.kk.shopping.MainActivity">
         Main Screen
     </screenName>
 

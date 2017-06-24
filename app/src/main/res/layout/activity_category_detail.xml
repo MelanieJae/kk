@@ -3,12 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.application.melanieh.kk.ui.ProductCategoryDetailActivity">
+    tools:context="com.application.melanieh.kk.shopping.ProductCategoryDetailActivity">
 
     <fragment
         android:id="@+id/categoryDetailFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.application.melanieh.kk.ui.ProductCategoryDetailFragment"/>
+        android:name="com.application.melanieh.kk.shopping.ProductCategoryDetailFragment"/>
 
 </android.support.constraint.ConstraintLayout>

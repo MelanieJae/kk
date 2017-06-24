@@ -40,6 +40,9 @@
     <string name="continue_shopping_btn_text">Continue Shopping</string>
     <string name="continue_checkout_btn_text">Continue Checkout</string>
 
+    <!-- Stripe payment screen -->
+    <string name="stripe_token_creation_failed">Error: Payment processing failed</string>
+
     <!-- notifications -->
 
     <!-- settings activity -->

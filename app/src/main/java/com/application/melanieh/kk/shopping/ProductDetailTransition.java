@@ -1,13 +1,11 @@
-package com.application.melanieh.kk.ui;
+package com.application.melanieh.kk.shopping;
 
 import android.annotation.TargetApi;
-import android.content.Context;
 import android.os.Build;
 import android.transition.ChangeBounds;
 import android.transition.ChangeImageTransform;
 import android.transition.ChangeTransform;
 import android.transition.TransitionSet;
-import android.util.AttributeSet;
 
 /**
  * Created by melanieh on 6/5/17.

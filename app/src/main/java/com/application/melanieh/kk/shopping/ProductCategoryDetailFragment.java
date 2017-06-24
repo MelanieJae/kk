@@ -1,17 +1,14 @@
-package com.application.melanieh.kk.ui;
+package com.application.melanieh.kk.shopping;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.IntegerRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.transition.Fade;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +17,8 @@ import android.widget.TextView;
 
 import com.application.melanieh.kk.CartItem;
 import com.application.melanieh.kk.Constants;
-import com.application.melanieh.kk.KKApplication;
 import com.application.melanieh.kk.Product;
 import com.application.melanieh.kk.R;
-import com.stripe.wrap.pay.utils.CartManager;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
