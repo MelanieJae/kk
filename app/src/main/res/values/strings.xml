@@ -42,6 +42,8 @@
 
     <!-- Stripe payment screen -->
     <string name="stripe_token_creation_failed">Error: Payment processing failed</string>
+    <string name="payment_failed_dialog_msg">Sorry, the payment attempt has failed.
+        Please close this dialog and try again.</string>
 
     <!-- notifications -->
 

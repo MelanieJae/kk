@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.application.melanieh.kk.R;
-import com.application.melanieh.kk.checkout.StripePayActivity;
+import com.application.melanieh.kk.checkout.CheckoutActivity;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -22,13 +22,17 @@ import butterknife.Unbinder;
 
 public class PayWithStripeBtnFragment extends Fragment {
 
-
     Unbinder unbinder;
     Button stripePay;
     @OnClick(R.id.pay_with_stripe_btn)
     public void onClick(View view) {
-        Intent launchPayWithStripe = new Intent(getActivity(), StripePayActivity.class);
-        startActivity(launchPayWithStripe);
+        Intent launchCheckout = new Intent(getActivity(), CheckoutActivity.class);
+        startActivity(launchCheckout);
+    }
+
+    public static PayWithStripeBtnFragment newInstance() {
+        PayWithStripeBtnFragment fragment = new PayWithStripeBtnFragment();
+        return fragment;
     }
 
     public PayWithStripeBtnFragment() {
@@ -42,14 +46,15 @@ public class PayWithStripeBtnFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater,
+                             @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_stripe_only_pay_button, container, false);
         unbinder = ButterKnife.bind(getActivity(), rootView);
         stripePay = (Button)rootView.findViewById(R.id.pay_with_stripe_btn);
         stripePay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent launchPayWithStripe = new Intent(getActivity(), StripePayActivity.class);
+                Intent launchPayWithStripe = new Intent(getActivity(), CheckoutActivity.class);
                 startActivity(launchPayWithStripe);
             }
         });

@@ -1,13 +1,10 @@
-package com.application.melanieh.kk;
+package com.application.melanieh.kk.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.IntegerRes;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
-
-import butterknife.BindInt;
 
 /**
  * Created by melanieh on 6/5/17.

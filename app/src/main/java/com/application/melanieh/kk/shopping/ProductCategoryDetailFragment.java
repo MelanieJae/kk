@@ -15,9 +15,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.application.melanieh.kk.CartItem;
+import com.application.melanieh.kk.models.CartItem;
 import com.application.melanieh.kk.Constants;
-import com.application.melanieh.kk.Product;
+import com.application.melanieh.kk.models.Product;
 import com.application.melanieh.kk.R;
 
 import java.util.ArrayList;

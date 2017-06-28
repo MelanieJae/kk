@@ -10,7 +10,7 @@
     android:layout_marginLeft="@dimen/horiz_margin"
     android:layout_marginRight="@dimen/horiz_margin"
     android:text="@string/continue_shopping_btn_text"
-    android:drawableRight="@drawable/android_pay_logo"
-    android:textSize="@dimen/medium_text_size"
+    android:textSize="@dimen/small_text_size"
+    android:textAllCaps="false"
     android:background="@android:color/darker_gray"
     android:textColor="@android:color/white" />

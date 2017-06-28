@@ -24,7 +24,6 @@ public class SetUpAndroidPayBtnFragment extends Fragment {
 
     Unbinder unbinder;
     @OnClick(R.id.set_up_android_pay_btn)
-
     public void onClick(View view) {
         Toast.makeText(getActivity(), "set up Android Pay button onClick works", Toast.LENGTH_SHORT).show();
         Intent redirectToPlayStore = new Intent(Intent.ACTION_VIEW);
@@ -55,7 +54,8 @@ public class SetUpAndroidPayBtnFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_set_up_android_pay_btn, container, false);
         unbinder = ButterKnife.bind(getActivity(), rootView);
         return rootView;

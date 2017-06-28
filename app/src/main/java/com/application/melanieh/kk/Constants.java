@@ -2,6 +2,8 @@ package com.application.melanieh.kk;
 
 import com.google.android.gms.wallet.WalletConstants;
 
+import java.util.ArrayList;
+
 /**
  * Created by melanieh on 5/30/17.
  */
@@ -80,7 +82,15 @@ public class Constants {
     public static final String MERCHANT_NAME="Kountry Klutter";
 
     /** Stripe/Android Pay integration **/
-    public static final String STRIPE_CURRENCY_CODE = "USD";
+    public static final String STRIPE_API_VERSION= "1.0";
+    public static final String CURRENCY_CODE_USD = "USD";
     public static final int WALLET_ENVIRONMENT = WalletConstants.ENVIRONMENT_TEST;
+
+    /** eventbus for cart and invoice updates **/
+    public static final int SUBJECT_CART_UPDATE= 0;
+    public static final int SUBJECT_INVOICE_UPDATE = 1;
+
+    /** activity request codes **/
+    public static final int REQUEST_CODE_LOAD_MASKED_WALLET = 100;
 
 }

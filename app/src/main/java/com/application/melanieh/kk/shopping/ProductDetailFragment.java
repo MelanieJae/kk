@@ -21,7 +21,7 @@ import android.widget.TextView;
 
 import com.application.melanieh.kk.Constants;
 import com.application.melanieh.kk.R;
-import com.application.melanieh.kk.checkout.AndroidPaywStripeActivity;
+import com.application.melanieh.kk.checkout.CheckoutActivity;
 
 import java.util.Arrays;
 import java.util.List;
@@ -67,7 +67,7 @@ public class ProductDetailFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.view_cart:
-                Intent launchCartView = new Intent(getContext(), AndroidPaywStripeActivity.class);
+                Intent launchCartView = new Intent(getContext(), CheckoutActivity.class);
 //                launchCartView.putExtra(Constants.CART_ITEMS_KEY, cartItems);
                 startActivity(launchCartView);
                 return true;

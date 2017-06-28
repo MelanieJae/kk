@@ -1,10 +1,7 @@
-package com.application.melanieh.kk;
+package com.application.melanieh.kk.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.Nullable;
-
-import com.google.android.gms.wallet.Cart;
 
 /**
  * Created by melanieh on 6/8/17.

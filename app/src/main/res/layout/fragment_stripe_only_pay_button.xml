@@ -11,7 +11,7 @@
     android:layout_marginRight="@dimen/horiz_margin"
     android:textAllCaps="false"
     android:text="@string/stripe_only_pay_btn_text"
+    android:backgroundTint="@android:color/darker_gray"
     android:drawableRight="@drawable/stripe_logo_white"
-    android:textSize="@dimen/medium_text_size"
-    android:background="@android:color/darker_gray"
+    android:textSize="@dimen/small_text_size"
     android:textColor="@android:color/white" />
