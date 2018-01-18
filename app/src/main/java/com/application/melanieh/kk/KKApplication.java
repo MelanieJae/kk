@@ -5,8 +5,7 @@ import android.app.Application;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Logger;
 import com.google.android.gms.analytics.Tracker;
-import com.stripe.wrap.pay.*;
-import com.stripe.wrap.pay.utils.CartManager;
+import com.stripe.wrap.pay.AndroidPayConfiguration;
 
 /**
  * Created by melanieh on 5/22/17.

@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/eventbus_test"
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@color/colorPrimaryDark"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/cart_item_rv"
@@ -13,9 +20,11 @@
 
     <TextView
         android:id="@+id/rv_emptyview_text"
+        android:gravity="center_horizontal"
+        android:textSize="28sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Your cart is empty."
         android:layout_gravity="center_vertical|center_horizontal"/>
 
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

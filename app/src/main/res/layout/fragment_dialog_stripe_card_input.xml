@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.stripe.android.view.CardInputWidget
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:stripe="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_input_widget"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    stripe:cardTint="@android:color/holo_green_dark"
+    stripe:cardTextErrorColor="@android:color/holo_red_dark"/>

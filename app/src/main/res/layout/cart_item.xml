@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:rowCount="4"
+    android:columnCount="@integer/list_item_column_count">
+
+    <TextView
+        android:id="@+id/itemNameLabel"
+        tools:text="Item Name: "
+        android:layout_width="@dimen/item_grid_cell_width_label"
+        android:layout_height="@dimen/item_grid_cell_height"/>
+    <TextView
+        android:id="@+id/itemNameValue"
+        tools:text="Tealight"
+        android:layout_width="@dimen/item_grid_cell_width_value"
+        android:layout_height="@dimen/item_grid_cell_height"/>
+    <TextView
+        android:id="@+id/qtyNameLabel"
+        tools:text="Qty: "
+        android:layout_width="@dimen/item_grid_cell_width_label"
+        android:layout_height="@dimen/item_grid_cell_height"/>
+    <TextView
+        android:id="@+id/qtyNameValue"
+        tools:text="10"
+        android:layout_width="@dimen/item_grid_cell_width_value"
+        android:layout_height="@dimen/item_grid_cell_height"/>
+    <TextView
+        android:id="@+id/itemUnitPriceLabel"
+        tools:text="Unit Price: "
+        android:layout_width="@dimen/item_grid_cell_width_label"
+        android:layout_height="@dimen/item_grid_cell_height"/>
+    <TextView
+        android:id="@+id/itemUnitPriceValue"
+        tools:text="$1"
+        android:layout_width="@dimen/item_grid_cell_width_value"
+        android:layout_height="@dimen/item_grid_cell_height"/>
+    <TextView
+        android:id="@+id/itemTotalPriceLabel"
+        tools:text="Total Price: "
+        android:layout_width="@dimen/item_grid_cell_width_label"
+        android:layout_height="@dimen/item_grid_cell_height"/>
+    <TextView
+        android:id="@+id/itemTotalPriceValue"
+        tools:text="$10"
+        android:layout_width="@dimen/item_grid_cell_width_value"
+        android:layout_height="@dimen/item_grid_cell_height"/>
+    <TextView
+        android:id="@+id/customerNotesLabel"
+        tools:text="Customer Notes: "
+        android:layout_width="@dimen/item_grid_cell_width_label"
+        android:layout_height="@dimen/item_grid_cell_height"/>
+    <TextView
+        android:id="@+id/customerNotesValue"
+        tools:text="set of 10"
+        android:layout_width="@dimen/item_grid_cell_width_value"
+        android:layout_height="@dimen/item_grid_cell_height"/>
+
+</GridLayout>

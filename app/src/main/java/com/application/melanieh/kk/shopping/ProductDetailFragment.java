@@ -19,14 +19,17 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.application.melanieh.kk.CartItemListener;
 import com.application.melanieh.kk.Constants;
 import com.application.melanieh.kk.R;
 import com.application.melanieh.kk.checkout.CheckoutActivity;
+import com.application.melanieh.kk.models.CartItem;
 
 import java.util.Arrays;
 import java.util.List;
 
-import butterknife.OnClick;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import timber.log.Timber;
 
 /**
@@ -35,22 +38,26 @@ import timber.log.Timber;
 
 public class ProductDetailFragment extends Fragment {
 
-    ImageView productImage;
-    TextView productName;
-    TextView cost;
-    Spinner varietySpinner;
-    TextView qtyLabel;
-    EditText qtyValue;
-    TextView custNotesLabel;
-    EditText custNotesET;
-
     InputMethodManager imm;
     private int variety = 0;
+    CartItemListener cartItemCallback;
 
-    @OnClick({R.id.qty_value,R.id.cust_requests_notes})
-    public void onClick(View view) {
-        showKeyboard(view);
-    }
+    @BindView(R.id.product_iv)
+    ImageView productImage;
+    @BindView(R.id.name)
+    TextView productName;
+    @BindView(R.id.cost)
+    TextView cost;
+    @BindView(R.id.product_variety_spinner)
+    Spinner varietySpinner;
+    @BindView(R.id.qty_label)
+    TextView qtyLabel;
+    @BindView(R.id.qty_value)
+    EditText qtyValue;
+    @BindView(R.id.cust_notes_label)
+    TextView custNotesLabel;
+    @BindView(R.id.cust_requests_notes)
+    EditText custNotesET;
 
     public ProductDetailFragment() {
         //
@@ -60,6 +67,8 @@ public class ProductDetailFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        // get eventbus instance; this class will publish the information for the product currently
+        // on the screen. When the add to cart button is tapped
 
     }
 
@@ -68,7 +77,6 @@ public class ProductDetailFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.view_cart:
                 Intent launchCartView = new Intent(getContext(), CheckoutActivity.class);
-//                launchCartView.putExtra(Constants.CART_ITEMS_KEY, cartItems);
                 startActivity(launchCartView);
                 return true;
         }
@@ -79,17 +87,11 @@ public class ProductDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
         Timber.d("onCreateView:");
 
         View rootView = inflater.inflate(R.layout.fragment_product_detail, container, false);
-        productImage = (ImageView)rootView.findViewById(R.id.product_iv);
-        productName = (TextView)rootView.findViewById(R.id.name);
-        cost = (TextView)rootView.findViewById(R.id.cost);
-        varietySpinner = (Spinner) rootView.findViewById(R.id.product_variety_spinner);
-        qtyLabel = (TextView)rootView.findViewById(R.id.qty_label);
-        qtyValue = (EditText) rootView.findViewById(R.id.qty_value);
-        custNotesLabel = (TextView)rootView.findViewById(R.id.cust_notes_label);
-        custNotesET = (EditText) rootView.findViewById(R.id.cust_requests_notes);
+        ButterKnife.bind(this, rootView);
 
         //control visibility of keyboard to only show when customer notes and quantity fields are clicked on
         imm = (InputMethodManager)getActivity().getSystemService(Service.INPUT_METHOD_SERVICE);
@@ -100,7 +102,9 @@ public class ProductDetailFragment extends Fragment {
         productImage.setImageResource(R.drawable.candle_category_sample);
         productName.setText("Tealights");
         cost.setText("$1");
+        qtyValue.setText("1");
         loadSpinner();
+        sendCartItem();
         return rootView;
     }
 
@@ -141,9 +145,17 @@ public class ProductDetailFragment extends Fragment {
         });
     }
 
-    private void showKeyboard(View view) {
+    public void showKeyboard(View view) {
         // reveal keyboard for these
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    private void sendCartItem() {
+        CartItem cartItem = new CartItem(productName.getText().toString(),
+                Integer.parseInt(qtyValue.getText().toString()),
+                (double)Double.parseDouble(cost.getText().toString()),
+                custNotesET.getText().toString(), 0.0);
+        cartItemCallback.passCartItem(cartItem);
     }
 
 }

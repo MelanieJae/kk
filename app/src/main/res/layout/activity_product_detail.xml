@@ -1,26 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.application.melanieh.kk.shopping.ProductDetailActivity">
+    android:layout_height="match_parent">
 
-    <fragment
-        android:id="@+id/productDetailFragment"
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.application.melanieh.kk.shopping.ProductDetailFragment"/>
+        tools:context="com.application.melanieh.kk.shopping.ProductDetailActivity">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/add_to_cart_fab"
-        android:layout_width="160dp"
-        android:layout_height="wrap_content"
-        app:fabSize="normal"
-        app:layout_anchor="@id/productDetailFragment"
-        android:layout_marginBottom="16dp"
-        android:layout_marginRight="16dp"
-        android:src="@drawable/ic_shopping_cart_white_48dp" />
+        <fragment
+            android:id="@+id/productDetailFragment"
+            android:name="com.application.melanieh.kk.shopping.ProductDetailFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/addToCartBtnFragment"
+            app:layout_constraintTop_toTopOf="parent" />
 
-</android.support.design.widget.CoordinatorLayout>
+        <fragment
+            android:id="@+id/addToCartBtnFragment"
+            android:name="com.application.melanieh.kk.shopping.AddToCartBtnFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/productDetailFragment" />
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>
+
+

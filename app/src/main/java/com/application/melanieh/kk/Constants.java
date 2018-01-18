@@ -2,8 +2,6 @@ package com.application.melanieh.kk;
 
 import com.google.android.gms.wallet.WalletConstants;
 
-import java.util.ArrayList;
-
 /**
  * Created by melanieh on 5/30/17.
  */
@@ -15,12 +13,13 @@ public class Constants {
     }
 
     /** fragment argument and intent extra keys **/
-    public static final String CART_ITEMS_KEY = "Empty cart";
+    public static final String CART_ITEM_DATA_KEY = "Cart Item data";
     public static final String DOMESTIC_SHIP_EST_KEY = "Domestic shipping estimate";
     public static final String CATEGORY_EXTRA_KEY = "transition image URL string";
     public static final String TRANSITION_IMAGE_KEY = "transition image URL string";
     public static final String TRANSITION_TEXT_KEY_NAME = "transition text-product name";
     public static final String TRANSITION_TEXT_KEY_COST = "transition text-product cost";
+
 
     /** sample image */
 //    public static final String SAMPLE_IMAGE_URL = BuildConfig.SAMPLE_IMAGE_URL;

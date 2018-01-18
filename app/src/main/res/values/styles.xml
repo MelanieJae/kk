@@ -15,6 +15,14 @@
         <item name="android:layout_marginLeft">8dp</item>
     </style>
 
+    <style name="KKToolBar" parent="@android:style/Widget.Holo.ActionBar">
+        <item name="android:titleTextStyle">@style/ToolbarText</item>
+    </style>
+
+    <style name="ToolbarText" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
     <style name="ProductTextStyleCart" parent="ProductTextStyle">
         <item name="android:textSize">@dimen/cart_item_text_size</item>
         <item name="android:textColor">@android:color/black</item>

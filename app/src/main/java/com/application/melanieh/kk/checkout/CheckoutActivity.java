@@ -10,9 +10,10 @@ import android.widget.Toast;
 
 import com.application.melanieh.kk.BuildConfig;
 import com.application.melanieh.kk.Constants;
-import com.application.melanieh.kk.EventBus;
+import com.application.melanieh.kk.EventBusSingleton;
 import com.application.melanieh.kk.PaymentProcessor;
-import com.application.melanieh.kk.shopping.PayWithStripeBtnFragment;
+import com.application.melanieh.kk.R;
+import com.application.melanieh.kk.models.CartItem;
 import com.application.melanieh.kk.shopping.SetUpAndroidPayBtnFragment;
 import com.google.android.gms.wallet.Cart;
 import com.google.android.gms.wallet.MaskedWallet;
@@ -29,13 +30,11 @@ import com.stripe.android.Stripe;
 import com.stripe.android.TokenCallback;
 import com.stripe.android.model.Card;
 import com.stripe.android.model.Token;
-import com.stripe.android.view.CardInputWidget;
 import com.stripe.wrap.pay.AndroidPayConfiguration;
 import com.stripe.wrap.pay.activity.StripeAndroidPayActivity;
-import com.application.melanieh.kk.R;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import java.util.ArrayList;
+
 import io.reactivex.disposables.CompositeDisposable;
 import timber.log.Timber;
 
@@ -50,30 +49,18 @@ public class CheckoutActivity extends StripeAndroidPayActivity implements Paymen
 
     Cart cart;
     Card card;
+    EventBusSingleton _bus;
     AndroidPayConfiguration payConfiguration;
     PaymentMethodTokenizationParameters parameters;
     SupportWalletFragment androidPayBtnFragment;
     // This class is a subscriber/observer of a cart update event published by the AddToCartFragment
-    private EventBus eventBus;
-    CompositeDisposable disposables;
 
+    CompositeDisposable disposables;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
-        CardInputWidget cardInputWidget = (CardInputWidget)findViewById(R.id.card_input_widget);
-        ButterKnife.bind(this);
-        ButterKnife.setDebug(true);
-
-            // extract card info from the widget fields and create the card object to process
-            card = cardInputWidget.getCard();
-            if (card == null) {
-                Timber.e("Invalid card data");
-            } else {
-                charge();
-            }
-
 
         // get instance of Android Pay Configuration and require shipping address from customer
         AndroidPayConfiguration payConfiguration = AndroidPayConfiguration.getInstance();
@@ -82,21 +69,20 @@ public class CheckoutActivity extends StripeAndroidPayActivity implements Paymen
 
         // shopping cart, continue shopping button and Stripe checkout buttons should appear regardless
 
-//        ShoppingCartFragment shoppingCartFragment = ShoppingCartFragment.newInstance();
-//        getSupportFragmentManager().beginTransaction()
-//                .replace(R.id.shoppingCartFragment, shoppingCartFragment)
-//                .commit();
-
-        ContinueShoppingBtnFragment continueShoppingBtnFragment = ContinueShoppingBtnFragment.newInstance();
-
-        getSupportFragmentManager().beginTransaction().replace(R.id.continueShoppingBtnFragment,
-                continueShoppingBtnFragment)
-                .commit();
-
-        PayWithStripeBtnFragment stripeBtnFragment = PayWithStripeBtnFragment.newInstance();
+        ShoppingCartFragment shoppingCartFragment = ShoppingCartFragment.newInstance();
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.stripeOnlyPayButtonFragment, stripeBtnFragment)
+                .replace(R.id.shoppingCartFragment, shoppingCartFragment)
                 .commit();
+
+//        ContinueShoppingBtnFragment continueShoppingBtnFragment = ContinueShoppingBtnFragment.newInstance();
+//        getSupportFragmentManager().beginTransaction().replace(R.id.continueShoppingBtnFragment,
+//                continueShoppingBtnFragment)
+//                .commit();
+//
+//        PayWithStripeBtnFragment stripeBtnFragment = PayWithStripeBtnFragment.newInstance();
+//        getSupportFragmentManager().beginTransaction()
+//                .replace(R.id.stripeOnlyPayButtonFragment, stripeBtnFragment)
+//                .commit();
     }
 
     @Override
@@ -140,10 +126,7 @@ public class CheckoutActivity extends StripeAndroidPayActivity implements Paymen
     @Override
     protected void onStart() {
         super.onStart();
-        disposables = new CompositeDisposable();
-
-
-//        disposables.add(cartUpdateEventEmitter.connect());
+        Timber.d("EventBus: " + _bus);
 
     }
     @Override
@@ -230,7 +213,8 @@ public class CheckoutActivity extends StripeAndroidPayActivity implements Paymen
                     public void onSuccess(Token token) {
                         // Send token to your server where the charge to the customer's card is made
                         // via the insertCharge method
-                        Toast.makeText(CheckoutActivity.this, "token= " + token.toString(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(CheckoutActivity.this, "token= " + token.toString(),
+                                Toast.LENGTH_LONG).show();
                         ChargeAsyncTask chargeAsyncTask = new ChargeAsyncTask(CheckoutActivity.this);
                         chargeAsyncTask.execute(token);
                     }
@@ -263,5 +247,11 @@ public class CheckoutActivity extends StripeAndroidPayActivity implements Paymen
         dialogBuilder.create();
         dialogBuilder.show();
 
+    }
+
+    private ArrayList<CartItem> getAllCartItems() {
+        ArrayList<CartItem> cart = new ArrayList<>();
+        // TODO fill in stream parse logic from eventbus
+        return cart;
     }
 }

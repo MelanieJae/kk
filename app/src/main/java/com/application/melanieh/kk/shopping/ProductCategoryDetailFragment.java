@@ -193,7 +193,7 @@ public class ProductCategoryDetailFragment extends Fragment {
                     launchproductDetail.putExtra(Constants.TRANSITION_TEXT_KEY_NAME, productName);
                     launchproductDetail.putExtra(Constants.TRANSITION_TEXT_KEY_COST, cost);
                     launchproductDetail.putExtra(Constants.TRANSITION_IMAGE_KEY, imageResId);
-                    launchproductDetail.putExtra(Constants.CART_ITEMS_KEY, cartItems);
+                    launchproductDetail.putExtra(Constants.CART_ITEM_DATA_KEY, cartItems);
                     context.startActivity(launchproductDetail);
                 }
             });

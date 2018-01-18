@@ -3,8 +3,9 @@ package com.application.melanieh.kk.shopping;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,10 +16,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.application.melanieh.kk.Constants;
 import com.application.melanieh.kk.KKApplication;
 import com.application.melanieh.kk.R;
-import com.application.melanieh.kk.Constants;
 import com.application.melanieh.kk.checkout.CheckoutActivity;
+import com.google.common.eventbus.EventBus;
 
 import java.util.ArrayList;
 
@@ -28,21 +30,25 @@ import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
 
+    @BindView(R.id.scrollView)
+    NestedScrollView scrollView;
+
 //    ArrayList<String> imageList;
     ArrayList<Integer> drawableList;
     String[] categoryLabels;
-    MenuImageAdapter menuImageAdapter;
     RecyclerView.LayoutManager rvLayoutManager;
+    CategoriesMenuAdapter categoriesRVAdapter;
 
-    @BindView(R.id.toolbar_logo)
-    ImageView toolBarIV;
     @BindView(R.id.product_item_list)
-    RecyclerView productItemRV;
+    RecyclerView categoriesRV;
+
+    private EventBus _bus = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         ButterKnife.bind(this);
         Timber.plant(new Timber.DebugTree());
 
@@ -68,11 +74,10 @@ public class MainActivity extends AppCompatActivity {
 
         /** populate category labels **/
         categoryLabels = getResources().getStringArray(R.array.product_categories);
-
-        menuImageAdapter = new MenuImageAdapter();
         rvLayoutManager = getLayoutManager();
-        productItemRV.setLayoutManager(rvLayoutManager);
-        productItemRV.setAdapter(menuImageAdapter);
+        categoriesRV.setLayoutManager(rvLayoutManager);
+        categoriesRVAdapter = new CategoriesMenuAdapter();
+        categoriesRV.setAdapter(categoriesRVAdapter);
 
     }
 
@@ -93,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
     private RecyclerView.LayoutManager getLayoutManager() {
         int spanCount = 0;
         int screenWidth = getResources().getConfiguration().screenWidthDp;
@@ -109,10 +115,10 @@ public class MainActivity extends AppCompatActivity {
 
     /** recyclerview adapter **/
 
-    public class MenuImageAdapter extends RecyclerView.Adapter<MenuImageAdapter.ImageViewHolder> {
+    public class CategoriesMenuAdapter extends RecyclerView.Adapter<CategoriesMenuAdapter.ImageViewHolder> {
 
         @Override
-        public MenuImageAdapter.ImageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public CategoriesMenuAdapter.ImageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.category_list_item, parent, false);
             return new ImageViewHolder(view);
@@ -120,7 +126,8 @@ public class MainActivity extends AppCompatActivity {
 
         @TargetApi(Build.VERSION_CODES.LOLLIPOP)
         @Override
-        public void onBindViewHolder(MenuImageAdapter.ImageViewHolder holder, int position) {
+        public void onBindViewHolder(CategoriesMenuAdapter.ImageViewHolder holder, int position) {
+
             Timber.d("onBindViewHolder");
             final int imageResId = drawableList.get(position);
 //            final String imageString = imageList.get(position);
@@ -136,7 +143,8 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
-                    Intent launchProductsList = new Intent(MainActivity.this, ProductCategoryDetailActivity.class);
+                    Intent launchProductsList = new Intent(MainActivity.this,
+                            ProductCategoryDetailActivity.class);
                     launchProductsList.setAction(Intent.ACTION_VIEW);
                     launchProductsList.putExtra(Constants.CATEGORY_EXTRA_KEY, "candles");
                     startActivity(launchProductsList);
