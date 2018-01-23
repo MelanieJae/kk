@@ -19,11 +19,9 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.application.melanieh.kk.ApplicationComponent;
-import com.application.melanieh.kk.CartItemListener;
 import com.application.melanieh.kk.Constants;
-import com.application.melanieh.kk.DaggerApplicationComponent;
 import com.application.melanieh.kk.EventBus;
+import com.application.melanieh.kk.KKApplication;
 import com.application.melanieh.kk.R;
 import com.application.melanieh.kk.checkout.CheckoutActivity;
 import com.application.melanieh.kk.models_and_modules.CartItem;
@@ -46,8 +44,6 @@ public class ProductDetailFragment extends Fragment {
 
     InputMethodManager imm;
     private int variety = 0;
-    CartItemListener cartItemCallback;
-    ApplicationComponent applicationComponent;
     @Inject
     EventBus bus;
 
@@ -81,8 +77,7 @@ public class ProductDetailFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        applicationComponent = DaggerApplicationComponent.builder().build();
-        applicationComponent.inject(this);
+        KKApplication.getApplicationComponent().inject(this);
         // get eventbus instance; this class will publish the information for the product currently
         // on the screen. When the add to cart button is tapped
 
@@ -176,6 +171,7 @@ public class ProductDetailFragment extends Fragment {
         // AddtoCartBtn and ShoppingCart fragments; this emits/publishes, they subscribe.
 
         bus.send(new Event.NewCartItemEvent());
+        Timber.d("PDFrag: bus:" + bus);
 
     }
 }

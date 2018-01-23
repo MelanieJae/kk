@@ -8,10 +8,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.application.melanieh.kk.ApplicationComponent;
 import com.application.melanieh.kk.Constants;
-import com.application.melanieh.kk.DaggerApplicationComponent;
 import com.application.melanieh.kk.EventBus;
+import com.application.melanieh.kk.KKApplication;
 import com.application.melanieh.kk.R;
 import com.application.melanieh.kk.models_and_modules.CartItem;
 import com.application.melanieh.kk.models_and_modules.Event;
@@ -34,8 +33,8 @@ public class AddToCartBtnFragment extends android.app.Fragment {
 
     CartManager cartManager;
     static CartItem cartItem;
-    ApplicationComponent applicationComponent;
-    @Inject EventBus bus;
+    @Inject
+    EventBus bus;
 
     @BindView(R.id.eventbus_test)
     TextView eventBusTestTV;
@@ -64,8 +63,7 @@ public class AddToCartBtnFragment extends android.app.Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        applicationComponent = DaggerApplicationComponent.builder().build();
-        applicationComponent.inject(this);
+        KKApplication.getApplicationComponent().inject(this);
 //        Bundle args = getArguments();
 //        CartItem incomingCartItem =
 //                args.getParcelable(Constants.CART_ITEMS_DATA_KEY);
@@ -76,6 +74,7 @@ public class AddToCartBtnFragment extends android.app.Fragment {
     public void onStart() {
         super.onStart();
         bus.send(new Event.NewCartItemEvent());
+        Timber.d("ATCBFrag: onStart: bus: " + bus);
         Timber.d("event emitted");
 
     }
@@ -148,6 +147,8 @@ public class AddToCartBtnFragment extends android.app.Fragment {
                         }
                     }
                 });
+        Timber.d("updateCart(): bus: " + bus);
+
 
     }
 

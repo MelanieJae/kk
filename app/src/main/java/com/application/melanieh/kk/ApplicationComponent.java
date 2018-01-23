@@ -1,5 +1,6 @@
 package com.application.melanieh.kk;
 
+import com.application.melanieh.kk.checkout.ShoppingCartFragment;
 import com.application.melanieh.kk.models_and_modules.BusModule;
 import com.application.melanieh.kk.shopping.AddToCartBtnFragment;
 import com.application.melanieh.kk.shopping.ProductDetailFragment;
@@ -16,8 +17,10 @@ import dagger.Component;
 @Component(modules = {BusModule.class})
 public interface ApplicationComponent {
 
-    EventBus getBus();
+    EventBus provideBus();
     void inject(AddToCartBtnFragment addToCartBtnFragment);
     void inject(ProductDetailFragment productDetailFragment);
+    void inject(ShoppingCartFragment shoppingCartFragment);
+
 
 }

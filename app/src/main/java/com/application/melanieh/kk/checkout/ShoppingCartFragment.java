@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.application.melanieh.kk.Constants;
 import com.application.melanieh.kk.EventBus;
+import com.application.melanieh.kk.KKApplication;
 import com.application.melanieh.kk.R;
 import com.application.melanieh.kk.models_and_modules.CartItem;
 import com.application.melanieh.kk.models_and_modules.Event;
@@ -64,6 +65,7 @@ public class ShoppingCartFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        KKApplication.getApplicationComponent().inject(this);
     }
 
     @Override
@@ -83,6 +85,7 @@ public class ShoppingCartFragment extends Fragment {
                         }
                     }
                 });
+        Timber.d("SCFrag: onResume() :bus: " + bus);
     }
 
 
