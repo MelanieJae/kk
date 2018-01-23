@@ -15,10 +15,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.application.melanieh.kk.models.CartItem;
 import com.application.melanieh.kk.Constants;
-import com.application.melanieh.kk.models.Product;
 import com.application.melanieh.kk.R;
+import com.application.melanieh.kk.models_and_modules.Product;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
@@ -40,7 +39,6 @@ public class ProductCategoryDetailFragment extends Fragment {
     @NonNull @BindView(R.id.category_products_rv)
     RecyclerView categoryProductsRV;
     static String category;
-    static ArrayList<CartItem> cartItems;
     // necessary for using ButterKnife in recycler view
     Unbinder unbinder;
 
@@ -49,6 +47,11 @@ public class ProductCategoryDetailFragment extends Fragment {
     int[] tempProductDrawables;
     ArrayList<Product> categoryProducts;
     static FragmentManager fragmentManager;
+
+    public static ProductCategoryDetailFragment newInstance() {
+        ProductCategoryDetailFragment fragment = new ProductCategoryDetailFragment();
+        return fragment;
+    }
 
     public ProductCategoryDetailFragment() {
         //
@@ -69,7 +72,6 @@ public class ProductCategoryDetailFragment extends Fragment {
          *
          */
 
-        cartItems = new ArrayList<>();
         /** populate category products list **/
         category = getActivity().getIntent().getStringExtra(Constants.CATEGORY_EXTRA_KEY);
 
@@ -193,7 +195,6 @@ public class ProductCategoryDetailFragment extends Fragment {
                     launchproductDetail.putExtra(Constants.TRANSITION_TEXT_KEY_NAME, productName);
                     launchproductDetail.putExtra(Constants.TRANSITION_TEXT_KEY_COST, cost);
                     launchproductDetail.putExtra(Constants.TRANSITION_IMAGE_KEY, imageResId);
-                    launchproductDetail.putExtra(Constants.CART_ITEM_DATA_KEY, cartItems);
                     context.startActivity(launchproductDetail);
                 }
             });

@@ -8,16 +8,22 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.application.melanieh.kk.ApplicationComponent;
 import com.application.melanieh.kk.Constants;
-import com.application.melanieh.kk.EventBusSingleton;
+import com.application.melanieh.kk.DaggerApplicationComponent;
+import com.application.melanieh.kk.EventBus;
 import com.application.melanieh.kk.R;
-import com.application.melanieh.kk.models.CartItem;
-import com.google.android.gms.wallet.Cart;
-import com.stripe.wrap.pay.utils.CartContentException;
+import com.application.melanieh.kk.models_and_modules.CartItem;
+import com.application.melanieh.kk.models_and_modules.Event;
 import com.stripe.wrap.pay.utils.CartManager;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 /**
@@ -27,9 +33,9 @@ import timber.log.Timber;
 public class AddToCartBtnFragment extends android.app.Fragment {
 
     CartManager cartManager;
-    CartItem cartItem;
-    Button addToCartButton;
-    // cart update event bus
+    static CartItem cartItem;
+    ApplicationComponent applicationComponent;
+    @Inject EventBus bus;
 
     @BindView(R.id.eventbus_test)
     TextView eventBusTestTV;
@@ -39,7 +45,16 @@ public class AddToCartBtnFragment extends android.app.Fragment {
 //    public void onClick(View view) {
 //        updateCart();
 //    }
-    EventBusSingleton _bus;
+
+    public static AddToCartBtnFragment newInstance(CartItem incomingCartItem) {
+        Timber.d("cart item: " + incomingCartItem);
+        cartItem = incomingCartItem;
+        Bundle args = new Bundle();
+        args.putParcelable(Constants.CART_ITEMS_DATA_KEY, incomingCartItem);
+        AddToCartBtnFragment fragment = new AddToCartBtnFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     public AddToCartBtnFragment() {
         //
@@ -49,13 +64,40 @@ public class AddToCartBtnFragment extends android.app.Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        applicationComponent = DaggerApplicationComponent.builder().build();
+        applicationComponent.inject(this);
+//        Bundle args = getArguments();
+//        CartItem incomingCartItem =
+//                args.getParcelable(Constants.CART_ITEMS_DATA_KEY);
+//        Timber.d("incoming cart item: " + incomingCartItem);
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        bus.send(new Event.NewCartItemEvent());
+        Timber.d("event emitted");
 
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        bus.toObservable()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Object>() {
+                    @Override
+                    public void accept(Object o) throws Exception {
+                        if (o instanceof Event.NewCartItemEvent) {
+                            Timber.d("observer accepts emitted NewCartItemEvent");
+                        } else {
+                            Timber.wtf("Exception thrown");
+                        }
+                    }
+                });
+    }
+
 
     @Nullable
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -63,14 +105,21 @@ public class AddToCartBtnFragment extends android.app.Fragment {
         Timber.d("AddToCartBtnFrag:OnCreateView");
         View rootView = inflater.inflate(R.layout.fragment_add_to_cart_btn, container, false);
         ButterKnife.bind(this, rootView);
+
         addToCartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cartItem = retrieveCartItem();
-                updateCart(cartItem);
+                updateCart();
             }
         });
         return rootView;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        bus.toObservable().unsubscribeOn(Schedulers.io());
+
     }
 
     @Override
@@ -84,65 +133,24 @@ public class AddToCartBtnFragment extends android.app.Fragment {
 
     private void getDomesticShippingEstimate() {}
 
-    private CartItem retrieveCartItem() {
-        Bundle args = getArguments();
-        CartItem incomingCartItem =
-                args.getParcelable(Constants.CART_ITEM_DATA_KEY);
-        return incomingCartItem;
-    }
-
-    private void updateCart(CartItem cartItem) {
+    private void updateCart() {
         Timber.d("updateCart()");
-        Timber.d("cartItem: " + cartItem);
-        _bus = EventBusSingleton.instance;
-        Timber.d("updateCart: EventBus:" + _bus);
-        // checks to see if button has observers/subscribers (it does, the shopping cart fragment)
-        // and emits a new tap event upon
-        // a tap of the button by the user
-        if (_bus.hasObservers()) {
-            _bus.send(new AddToCartBtnFragment.TapEvent());
-            _bus.send(cartItem);
-            Timber.d("Tap event emitted");
-        } else {
-            Timber.d("No observers found, tap event not emitted");
-        }
-    }
-
-    public Cart addFeesToCart(CartItem cartItem) {
-        // transfer items from customized cart to a Stripe Cart Manager object
-        cartManager = new CartManager();
-        // TODO: change to retrieveCartItem() call once that method code is added
-        cartManager.addLineItem
-                ("Candle", 5, Long.parseLong("20"));
-
-        // Add a shipping line item
-        cartManager.addShippingLineItem(Constants.DOMESTIC_SHIP_EST_KEY,
-                Long.parseLong("2"));
-        // Set the tax line item - there can be only one;
-        // TODO: change to getTax() call once taxes are set elsewhere
-        cartManager.setTaxLineItem("Tax",
-                Long.parseLong("2"));
-        Timber.d("CartManager: " + cartManager.toString());
-
-
-        /** make sure a valid Google Play Services/Android pay cart can be created from
-         * these line items
-         * */
-
-        try {
-            Cart cart = cartManager.buildCart();
-            Timber.d("Cart: " + cart.toString());
-
-            return cart;
-        } catch (CartContentException unexpected) {
-            Timber.wtf(unexpected,
-                    "Valid cart cannot be created. " +
-                            "Bad line items detected or bad total price string for the cart");
-            return null;
-        }
+        bus.toObservable()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Object>() {
+                    @Override
+                    public void accept(Object o) throws Exception {
+                        if (o instanceof Event.NewCartItemEvent) {
+                            Timber.d("observer accepts emitted NewCartItemEvent");
+                        } else {
+                            Timber.wtf("Exception thrown");
+                        }
+                    }
+                });
 
     }
 
-    public static class TapEvent {}
+
 }
 

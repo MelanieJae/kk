@@ -19,14 +19,20 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.application.melanieh.kk.ApplicationComponent;
 import com.application.melanieh.kk.CartItemListener;
 import com.application.melanieh.kk.Constants;
+import com.application.melanieh.kk.DaggerApplicationComponent;
+import com.application.melanieh.kk.EventBus;
 import com.application.melanieh.kk.R;
 import com.application.melanieh.kk.checkout.CheckoutActivity;
-import com.application.melanieh.kk.models.CartItem;
+import com.application.melanieh.kk.models_and_modules.CartItem;
+import com.application.melanieh.kk.models_and_modules.Event;
 
 import java.util.Arrays;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,6 +47,9 @@ public class ProductDetailFragment extends Fragment {
     InputMethodManager imm;
     private int variety = 0;
     CartItemListener cartItemCallback;
+    ApplicationComponent applicationComponent;
+    @Inject
+    EventBus bus;
 
     @BindView(R.id.product_iv)
     ImageView productImage;
@@ -59,6 +68,11 @@ public class ProductDetailFragment extends Fragment {
     @BindView(R.id.cust_requests_notes)
     EditText custNotesET;
 
+
+    public static ProductDetailFragment newInstance() {
+        ProductDetailFragment fragment = new ProductDetailFragment();
+        return fragment;
+    }
     public ProductDetailFragment() {
         //
     }
@@ -67,6 +81,8 @@ public class ProductDetailFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        applicationComponent = DaggerApplicationComponent.builder().build();
+        applicationComponent.inject(this);
         // get eventbus instance; this class will publish the information for the product currently
         // on the screen. When the add to cart button is tapped
 
@@ -96,8 +112,8 @@ public class ProductDetailFragment extends Fragment {
         //control visibility of keyboard to only show when customer notes and quantity fields are clicked on
         imm = (InputMethodManager)getActivity().getSystemService(Service.INPUT_METHOD_SERVICE);
         // default state for keyboard is hidden
-        imm.hideSoftInputFromWindow(qtyValue.getWindowToken(), 0);
-        imm.hideSoftInputFromWindow(custNotesET.getWindowToken(), 0);
+        showKeyboard(qtyValue);
+        showKeyboard(custNotesET);
 
         productImage.setImageResource(R.drawable.candle_category_sample);
         productName.setText("Tealights");
@@ -153,9 +169,13 @@ public class ProductDetailFragment extends Fragment {
     private void sendCartItem() {
         CartItem cartItem = new CartItem(productName.getText().toString(),
                 Integer.parseInt(qtyValue.getText().toString()),
-                (double)Double.parseDouble(cost.getText().toString()),
+                1.0,
                 custNotesET.getText().toString(), 0.0);
-        cartItemCallback.passCartItem(cartItem);
-    }
+        Timber.d("PDFrag: CartItem: " + cartItem);
+        // this publishes a NewCartItemEvent; this is the companion call to the code in the
+        // AddtoCartBtn and ShoppingCart fragments; this emits/publishes, they subscribe.
 
+        bus.send(new Event.NewCartItemEvent());
+
+    }
 }

@@ -1,7 +1,9 @@
-package com.application.melanieh.kk.models;
+package com.application.melanieh.kk.models_and_modules;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import java.util.Arrays;
 
 /**
  * Created by melanieh on 6/8/17.
@@ -97,4 +99,15 @@ public class CartItem implements Parcelable {
 
     }
 
+    @Override
+    public String toString() {
+        return "CartItem{" +
+                "itemName='" + itemName + '\'' +
+                ", itemQty=" + itemQty +
+                ", itemUnitPrice=" + itemUnitPrice +
+                ", customerNotes='" + customerNotes + '\'' +
+                ", shippingEstimate=" + shippingEstimate +
+                ", cartItemParamStrings=" + Arrays.toString(cartItemParamStrings) +
+                '}';
+    }
 }

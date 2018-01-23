@@ -11,20 +11,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.application.melanieh.kk.EventBusSingleton;
+import com.application.melanieh.kk.Constants;
+import com.application.melanieh.kk.EventBus;
 import com.application.melanieh.kk.R;
-import com.application.melanieh.kk.models.CartItem;
-import com.application.melanieh.kk.shopping.AddToCartBtnFragment;
+import com.application.melanieh.kk.models_and_modules.CartItem;
+import com.application.melanieh.kk.models_and_modules.Event;
+import com.google.android.gms.wallet.Cart;
+import com.stripe.wrap.pay.utils.CartContentException;
+import com.stripe.wrap.pay.utils.CartManager;
 
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Stream;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.flowables.ConnectableFlowable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 /**
@@ -34,17 +39,18 @@ import timber.log.Timber;
 public class ShoppingCartFragment extends Fragment {
 
     ArrayList<CartItem> cartItems;
+    @Inject
+    EventBus bus;
 
     @BindView(R.id.cart_item_rv)
     RecyclerView cartItemRV;
     private CompositeDisposable disposables;
     @BindView(R.id.rv_emptyview_text)
     TextView emptyViewTV;
+    CartManager cartManager;
 
     // this class is an observer/subscriber to cart update events (observable)
     // published by the bus in the AddToCartFragment
-
-    EventBusSingleton _bus;
 
     public static ShoppingCartFragment newInstance() {
         ShoppingCartFragment fragment = new ShoppingCartFragment();
@@ -61,38 +67,22 @@ public class ShoppingCartFragment extends Fragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        disposables = new CompositeDisposable();
-        _bus = EventBusSingleton.instance;
-        Timber.d("ShoppingCartFrag: Event Bus: " + _bus);
-        ConnectableFlowable<Object> tapEventEmitter = _bus.asFlowable().publish();
-        disposables
-                .add(
-                        tapEventEmitter.subscribe(
-                                event -> {
-                                    if (event instanceof AddToCartBtnFragment.TapEvent) {
-
-                                    }}));
-
-        // this publishes a tapeventemitter event which causes only the tap count to display (which is the size of
-        // an array called "taps" which contains all of the tap events available to a tapeventemitter subscriber)
-        // after the word "tap" is displayed, which is the result of the subscription of the disposable (i.e. the tap button)
-        // to the tapeventemitter, which is the publisher of any queued tap events.
-
-        disposables.add(
-                tapEventEmitter
-                        .publish(stream -> stream.buffer(stream.debounce(1, TimeUnit.SECONDS)))
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                                tap -> {
-//                                    ArrayList<CartItem> allCartItems = parseCartFromStream(stream);
-                                    displayCart(cartItems);
-                                }));
-
-        disposables.add(tapEventEmitter.connect());
-
-//        // tap and count number won't show without this
+    public void onResume() {
+        super.onResume();
+        bus
+                .toObservable()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Object>() {
+                    @Override
+                    public void accept(Object o) throws Exception {
+                        if (o instanceof Event.NewCartItemEvent) {
+                            Timber.d("observer accepts emitted NewCartItemEvent");
+                        } else {
+                            Timber.wtf("Exception thrown");
+                        }
+                    }
+                });
     }
 
 
@@ -103,18 +93,13 @@ public class ShoppingCartFragment extends Fragment {
         return rootView;
     }
 
-
     @Override
-    public void onStop() {
-        super.onStop();
-        disposables.clear();
+    public void onPause() {
+        super.onPause();
+        bus.toObservable()
+                .unsubscribeOn(Schedulers.io());
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-//      _bus.unregister(lifecycle);
-    }
 
     /**
      * Created by melanieh on 6/28/17.
@@ -193,12 +178,6 @@ public class ShoppingCartFragment extends Fragment {
         }
     }
 
-    private ArrayList<CartItem> parseCartFromStream (Stream<Object> streamFromBus) {
-        ArrayList<CartItem> cart = new ArrayList<>();
-        // TODO: add logic
-        return cart;
-    }
-
     public void displayCart(ArrayList<CartItem> cartItems) {
         //todo: finish code for loading cart item info into recyclerview/arraylist
         if (cartItems == null) {
@@ -213,5 +192,48 @@ public class ShoppingCartFragment extends Fragment {
         }
     }
 
+    /**
+     * RxAndroid event bus for cart update pub-sub pattern; GP Cart is the pub and the pay with stripe button
+     * and Android Pay button fragments are the subs. The eventbus singleton is used by the Pay with Stripe and Android Pay btn
+     * fragments.
+     */
+
+    // TODO: implement with Dagger
+
+    private Cart updateCart(CartItem cartItem) {
+        // transfer items from customized cart to a Stripe Cart Manager object
+        cartManager = new CartManager();
+        // TODO: change to retrieveCartItem() call once that method code is added
+        cartManager.addLineItem
+                ("Candle", 5, Long.parseLong("20"));
+
+        // Add a shipping line item
+        cartManager.addShippingLineItem(Constants.DOMESTIC_SHIP_EST_KEY,
+                Long.parseLong("2"));
+        // Set the tax line item - there can be only one;
+        // TODO: change to getTax() call once taxes are set elsewhere
+        cartManager.setTaxLineItem("Tax",
+                Long.parseLong("2"));
+        Timber.d("CartManager: " + cartManager.toString());
+
+
+        /** make sure a valid Google Play Services/Android pay cart can be created from these line items
+         * */
+
+        try {
+            Cart cart = cartManager.buildCart();
+            Timber.d("Cart: " + cart.toString());
+            // publishes cart for subscribers/observers, i.e. the pay button fragments
+//            if (eventBus.hasObservers()) {
+//                eventBus.send(new CartUpdateEvent());
+//            }
+            return cart;
+        } catch (CartContentException unexpected) {
+            Timber.wtf(unexpected,
+                    "Valid cart cannot be created. " +
+                            "Bad line items detected or bad total price string for the cart");
+            return null;
+        }
+    }
 
 }

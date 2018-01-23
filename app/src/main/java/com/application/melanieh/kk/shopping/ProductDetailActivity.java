@@ -8,15 +8,10 @@ import android.view.MenuItem;
 
 import com.application.melanieh.kk.CartItemListener;
 import com.application.melanieh.kk.Constants;
-import com.application.melanieh.kk.EventBusSingleton;
 import com.application.melanieh.kk.R;
 import com.application.melanieh.kk.checkout.CheckoutActivity;
-import com.application.melanieh.kk.models.CartItem;
-import com.google.android.gms.wallet.Cart;
-import com.stripe.wrap.pay.utils.CartContentException;
-import com.stripe.wrap.pay.utils.CartManager;
+import com.application.melanieh.kk.models_and_modules.CartItem;
 
-import io.reactivex.disposables.CompositeDisposable;
 import timber.log.Timber;
 
 public class ProductDetailActivity extends AppCompatActivity implements CartItemListener{
@@ -25,11 +20,6 @@ public class ProductDetailActivity extends AppCompatActivity implements CartItem
      * event bus for publishing cart updates when the add to cart FAB is pushed
      */
 
-    CartItem cartItem;
-    Cart cart;
-    CartManager cartManager;
-    EventBusSingleton _bus;
-    CompositeDisposable disposables;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,80 +46,16 @@ public class ProductDetailActivity extends AppCompatActivity implements CartItem
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-
-    }
-
-    /**
-     * RxAndroid event bus for cart update pub-sub pattern; GP Cart is the pub and the pay with stripe button
-     * and Android Pay button fragments are the subs. The eventbus singleton is used by the Pay with Stripe and Android Pay btn
-     * fragments.
-     */
-
-    // TODO: implement with Dagger
-
-    private Cart updateCart(CartItem cartItem) {
-        // transfer items from customized cart to a Stripe Cart Manager object
-        cartManager = new CartManager();
-        // TODO: change to retrieveCartItem() call once that method code is added
-        cartManager.addLineItem
-                ("Candle", 5, Long.parseLong("20"));
-
-        // Add a shipping line item
-        cartManager.addShippingLineItem(Constants.DOMESTIC_SHIP_EST_KEY,
-                Long.parseLong("2"));
-        // Set the tax line item - there can be only one;
-        // TODO: change to getTax() call once taxes are set elsewhere
-        cartManager.setTaxLineItem("Tax",
-                Long.parseLong("2"));
-        Timber.d("CartManager: " + cartManager.toString());
-
-
-        /** make sure a valid Google Play Services/Android pay cart can be created from these line items
-         * */
-
-        try {
-            Cart cart = cartManager.buildCart();
-            Timber.d("Cart: " + cart.toString());
-            // publishes cart for subscribers/observers, i.e. the pay button fragments
-//            if (eventBus.hasObservers()) {
-//                eventBus.send(new CartUpdateEvent());
-//            }
-            return cart;
-        } catch (CartContentException unexpected) {
-            Timber.wtf(unexpected,
-                    "Valid cart cannot be created. " +
-                            "Bad line items detected or bad total price string for the cart");
-            return null;
-        }
-    }
-
-    public void publishUpdatedCart() {
-
-    }
-
-    @Override
     public void passCartItem(CartItem cartItem) {
-        AddToCartBtnFragment updatedCartBtnFrag = new AddToCartBtnFragment ();
-        Bundle args = new Bundle();
-        args.putParcelable(Constants.CART_ITEM_DATA_KEY, cartItem);
-        updatedCartBtnFrag.setArguments(args);
+        Timber.d("ProductDetailActivity: " + cartItem);
+
+        AddToCartBtnFragment updatedCartBtnFrag = AddToCartBtnFragment.newInstance(cartItem);
+        Timber.d("ProdDetAct post new instance: " +
+                updatedCartBtnFrag.getArguments().getParcelable(Constants.CART_ITEMS_DATA_KEY).toString());
         getFragmentManager().beginTransaction()
                 .replace(R.id.addToCartBtnFragment,
                         updatedCartBtnFrag)
                 .commit();
     }
-
-    //    @Singleton
-//    public EventBus getEventBusSingleton() {
-//
-//        if (_bus == null) {
-//            _bus = new EventBus();
-//            Timber.d("bus constructor: EventBus: " + _bus);
-//        }
-//
-//        return _bus;
-//    }
 
 }

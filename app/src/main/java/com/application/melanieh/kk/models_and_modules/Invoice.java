@@ -1,4 +1,4 @@
-package com.application.melanieh.kk.models;
+package com.application.melanieh.kk.models_and_modules;
 
 import java.util.ArrayList;
 

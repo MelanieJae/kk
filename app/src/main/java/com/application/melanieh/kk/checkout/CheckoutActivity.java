@@ -10,10 +10,9 @@ import android.widget.Toast;
 
 import com.application.melanieh.kk.BuildConfig;
 import com.application.melanieh.kk.Constants;
-import com.application.melanieh.kk.EventBusSingleton;
 import com.application.melanieh.kk.PaymentProcessor;
 import com.application.melanieh.kk.R;
-import com.application.melanieh.kk.models.CartItem;
+import com.application.melanieh.kk.models_and_modules.CartItem;
 import com.application.melanieh.kk.shopping.SetUpAndroidPayBtnFragment;
 import com.google.android.gms.wallet.Cart;
 import com.google.android.gms.wallet.MaskedWallet;
@@ -49,7 +48,6 @@ public class CheckoutActivity extends StripeAndroidPayActivity implements Paymen
 
     Cart cart;
     Card card;
-    EventBusSingleton _bus;
     AndroidPayConfiguration payConfiguration;
     PaymentMethodTokenizationParameters parameters;
     SupportWalletFragment androidPayBtnFragment;
@@ -126,7 +124,6 @@ public class CheckoutActivity extends StripeAndroidPayActivity implements Paymen
     @Override
     protected void onStart() {
         super.onStart();
-        Timber.d("EventBus: " + _bus);
 
     }
     @Override

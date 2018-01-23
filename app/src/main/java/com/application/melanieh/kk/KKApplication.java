@@ -13,8 +13,21 @@ import com.stripe.wrap.pay.AndroidPayConfiguration;
 
 public class KKApplication extends Application {
 
+    private Tracker tracker;
+    private static ApplicationComponent applicationComponent;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        applicationComponent = DaggerApplicationComponent.create();
+
+    }
+
+    public static ApplicationComponent getApplicationComponent() {
+        return applicationComponent;
+    }
+
     // Google Analytics tracker
-    Tracker tracker;
     public void startTracking() {
 
         /** Google Analytics tracker */
@@ -32,8 +45,10 @@ public class KKApplication extends Application {
         }
     }
 
+    // Android Pay config instance
     public AndroidPayConfiguration initializeAndroidPayConfig() {
         return AndroidPayConfiguration.init(BuildConfig.STRIPE_TEST_PUBLISHABLE_KEY, "USD");
     }
+
 
 }

@@ -19,6 +19,7 @@ public class Constants {
     public static final String TRANSITION_IMAGE_KEY = "transition image URL string";
     public static final String TRANSITION_TEXT_KEY_NAME = "transition text-product name";
     public static final String TRANSITION_TEXT_KEY_COST = "transition text-product cost";
+    public static final String CART_ITEMS_DATA_KEY = "Cart Item data";
 
 
     /** sample image */

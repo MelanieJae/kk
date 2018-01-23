@@ -1,4 +1,4 @@
-package com.application.melanieh.kk.models;
+package com.application.melanieh.kk.models_and_modules;
 
 import android.os.Parcel;
 import android.os.Parcelable;
