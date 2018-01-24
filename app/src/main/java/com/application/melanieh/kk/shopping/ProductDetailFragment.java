@@ -20,17 +20,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.application.melanieh.kk.Constants;
-import com.application.melanieh.kk.EventBus;
 import com.application.melanieh.kk.KKApplication;
 import com.application.melanieh.kk.R;
 import com.application.melanieh.kk.checkout.CheckoutActivity;
 import com.application.melanieh.kk.models_and_modules.CartItem;
-import com.application.melanieh.kk.models_and_modules.Event;
 
 import java.util.Arrays;
 import java.util.List;
-
-import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,8 +40,6 @@ public class ProductDetailFragment extends Fragment {
 
     InputMethodManager imm;
     private int variety = 0;
-    @Inject
-    EventBus bus;
 
     @BindView(R.id.product_iv)
     ImageView productImage;
@@ -77,10 +71,8 @@ public class ProductDetailFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        KKApplication.getApplicationComponent().inject(this);
-        // get eventbus instance; this class will publish the information for the product currently
-        // on the screen. When the add to cart button is tapped
-
+        // ensures CartItem PublishSubject is a singleton by managing the application component creation
+        // through the application class
     }
 
     @Override
@@ -115,7 +107,10 @@ public class ProductDetailFragment extends Fragment {
         cost.setText("$1");
         qtyValue.setText("1");
         loadSpinner();
+        // TODO this should be an and/or; keeping as "or" and catching qty = 0 in a null check/dialog
+//        if (Integer.parseInt(qtyValue.toString()) > 0 || custNotesET.getText() != null)  {
         sendCartItem();
+//        }
         return rootView;
     }
 
@@ -166,12 +161,8 @@ public class ProductDetailFragment extends Fragment {
                 Integer.parseInt(qtyValue.getText().toString()),
                 1.0,
                 custNotesET.getText().toString(), 0.0);
-        Timber.d("PDFrag: CartItem: " + cartItem);
-        // this publishes a NewCartItemEvent; this is the companion call to the code in the
-        // AddtoCartBtn and ShoppingCart fragments; this emits/publishes, they subscribe.
-
-        bus.send(new Event.NewCartItemEvent());
-        Timber.d("PDFrag: bus:" + bus);
+        Timber.d("sendCartItem: cartItem" + cartItem);
+        KKApplication.getApplicationComponent().getCartItem().publish();
 
     }
 }

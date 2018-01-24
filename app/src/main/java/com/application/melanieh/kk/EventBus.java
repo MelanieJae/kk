@@ -22,15 +22,13 @@ public class EventBus {
         _bus.onNext(o);
     }
 
-//    public Flowable<Object> asFlowable() {
-//        return _bus.toFlowable(BackpressureStrategy.LATEST);
-//    }
-
     public Observable<Object> toObservable() {
         return _bus;
     }
 
-
+    public boolean hasObservers() {
+        return _bus.hasObservers();
+    }
 }
 
 

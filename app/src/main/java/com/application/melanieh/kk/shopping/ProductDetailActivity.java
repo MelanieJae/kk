@@ -49,7 +49,7 @@ public class ProductDetailActivity extends AppCompatActivity implements CartItem
     public void passCartItem(CartItem cartItem) {
         Timber.d("ProductDetailActivity: " + cartItem);
 
-        AddToCartBtnFragment updatedCartBtnFrag = AddToCartBtnFragment.newInstance(cartItem);
+        AddToCartBtnFragment updatedCartBtnFrag = AddToCartBtnFragment.newInstance();
         Timber.d("ProdDetAct post new instance: " +
                 updatedCartBtnFrag.getArguments().getParcelable(Constants.CART_ITEMS_DATA_KEY).toString());
         getFragmentManager().beginTransaction()

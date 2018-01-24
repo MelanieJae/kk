@@ -12,25 +12,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.application.melanieh.kk.Constants;
-import com.application.melanieh.kk.EventBus;
-import com.application.melanieh.kk.KKApplication;
 import com.application.melanieh.kk.R;
 import com.application.melanieh.kk.models_and_modules.CartItem;
-import com.application.melanieh.kk.models_and_modules.Event;
 import com.google.android.gms.wallet.Cart;
 import com.stripe.wrap.pay.utils.CartContentException;
 import com.stripe.wrap.pay.utils.CartManager;
 
 import java.util.ArrayList;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 /**
@@ -40,9 +32,6 @@ import timber.log.Timber;
 public class ShoppingCartFragment extends Fragment {
 
     ArrayList<CartItem> cartItems;
-    @Inject
-    EventBus bus;
-
     @BindView(R.id.cart_item_rv)
     RecyclerView cartItemRV;
     private CompositeDisposable disposables;
@@ -65,32 +54,11 @@ public class ShoppingCartFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        KKApplication.getApplicationComponent().inject(this);
     }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        bus
-                .toObservable()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Object>() {
-                    @Override
-                    public void accept(Object o) throws Exception {
-                        if (o instanceof Event.NewCartItemEvent) {
-                            Timber.d("observer accepts emitted NewCartItemEvent");
-                        } else {
-                            Timber.wtf("Exception thrown");
-                        }
-                    }
-                });
-        Timber.d("SCFrag: onResume() :bus: " + bus);
-    }
-
 
     @Nullable
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_shopping_cart, container, false);
         ButterKnife.bind(getActivity(), rootView);
         return rootView;
@@ -99,8 +67,6 @@ public class ShoppingCartFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        bus.toObservable()
-                .unsubscribeOn(Schedulers.io());
     }
 
 
@@ -182,13 +148,9 @@ public class ShoppingCartFragment extends Fragment {
     }
 
     public void displayCart(ArrayList<CartItem> cartItems) {
-        //todo: finish code for loading cart item info into recyclerview/arraylist
         if (cartItems == null) {
             emptyViewTV.setText("Your cart is empty.");
         } else {
-            // this is temporary until eventbus is working
-//            cartItems.add
-//                    (new CartItem("tealights", 10, 1, "set of 10", 1.0));
             CartItemRVAdapter rvAdapter = new CartItemRVAdapter(getContext(), cartItems);
             cartItemRV.setLayoutManager(new LinearLayoutManager(getContext()));
             cartItemRV.setAdapter(rvAdapter);
@@ -203,7 +165,8 @@ public class ShoppingCartFragment extends Fragment {
 
     // TODO: implement with Dagger
 
-    private Cart updateCart(CartItem cartItem) {
+    private Cart assembleStripeCart(ArrayList cartList) {
+
         // transfer items from customized cart to a Stripe Cart Manager object
         cartManager = new CartManager();
         // TODO: change to retrieveCartItem() call once that method code is added
@@ -220,17 +183,13 @@ public class ShoppingCartFragment extends Fragment {
         Timber.d("CartManager: " + cartManager.toString());
 
 
-        /** make sure a valid Google Play Services/Android pay cart can be created from these line items
+        /** TODO: make sure a valid Google Play Services/Android pay cart can be created from these line items
          * */
 
         try {
-            Cart cart = cartManager.buildCart();
-            Timber.d("Cart: " + cart.toString());
-            // publishes cart for subscribers/observers, i.e. the pay button fragments
-//            if (eventBus.hasObservers()) {
-//                eventBus.send(new CartUpdateEvent());
-//            }
-            return cart;
+            Cart stripeCartObject = cartManager.buildCart();
+            Timber.d("Cart: " + stripeCartObject.toString());
+            return stripeCartObject;
         } catch (CartContentException unexpected) {
             Timber.wtf(unexpected,
                     "Valid cart cannot be created. " +

@@ -1,26 +1,23 @@
 package com.application.melanieh.kk;
 
-import com.application.melanieh.kk.checkout.ShoppingCartFragment;
 import com.application.melanieh.kk.models_and_modules.BusModule;
-import com.application.melanieh.kk.shopping.AddToCartBtnFragment;
-import com.application.melanieh.kk.shopping.ProductDetailFragment;
+import com.application.melanieh.kk.models_and_modules.CartItem;
 
 import javax.inject.Singleton;
 
 import dagger.Component;
+import io.reactivex.Flowable;
 
 /**
  * Created by melanieh on 1/22/18.
+ *
+ * Dagger application component for Dagger/RxJava event bus for cart updates
  */
 
 @Singleton
 @Component(modules = {BusModule.class})
 public interface ApplicationComponent {
 
-    EventBus provideBus();
-    void inject(AddToCartBtnFragment addToCartBtnFragment);
-    void inject(ProductDetailFragment productDetailFragment);
-    void inject(ShoppingCartFragment shoppingCartFragment);
-
+    Flowable<CartItem> getCartItem();
 
 }
