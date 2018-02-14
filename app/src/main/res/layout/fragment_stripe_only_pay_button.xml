@@ -15,3 +15,4 @@
     android:drawableRight="@drawable/stripe_logo_white"
     android:textSize="@dimen/small_text_size"
     android:textColor="@android:color/white" />
+

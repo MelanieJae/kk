@@ -18,15 +18,7 @@
             android:name="com.application.melanieh.kk.shopping.ProductDetailFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/addToCartBtnFragment"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <fragment
-            android:id="@+id/addToCartBtnFragment"
-            android:name="com.application.melanieh.kk.shopping.AddToCartBtnFragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/productDetailFragment"/>
 
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

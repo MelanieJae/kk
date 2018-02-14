@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/product_categories_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/list_vert_margin"
+        android:layout_marginBottom="@dimen/list_vert_margin"
+        android:layout_marginLeft="@dimen/list_horiz_margin"
+        android:layout_marginRight="@dimen/list_horiz_margin" />
+
+
+</android.support.constraint.ConstraintLayout>

@@ -1,12 +1,10 @@
 package com.application.melanieh.kk;
 
 import com.application.melanieh.kk.models_and_modules.BusModule;
-import com.application.melanieh.kk.models_and_modules.CartItem;
 
 import javax.inject.Singleton;
 
 import dagger.Component;
-import io.reactivex.Flowable;
 
 /**
  * Created by melanieh on 1/22/18.
@@ -18,6 +16,7 @@ import io.reactivex.Flowable;
 @Component(modules = {BusModule.class})
 public interface ApplicationComponent {
 
-    Flowable<CartItem> getCartItem();
+//    void inject(ProductDetailFragment productDetailFragment);
+//    void inject(AddToCartBtnFragment addToCartBtnFragment);
 
 }

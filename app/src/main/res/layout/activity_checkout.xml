@@ -1,42 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.application.melanieh.kk.shopping.ProductDetailActivity">
 
     <fragment
         android:id="@+id/shoppingCartFragment"
         android:name="com.application.melanieh.kk.checkout.ShoppingCartFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/continueShoppingBtnFragment"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content" />
 
     <fragment
         android:id="@+id/continueShoppingBtnFragment"
         android:name="com.application.melanieh.kk.checkout.ContinueShoppingBtnFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/stripeOnlyPayButtonFragment"
-        app:layout_constraintTop_toBottomOf="@+id/shoppingCartFragment" />
+        android:layout_height="wrap_content" />
 
     <fragment
         android:id="@+id/stripeOnlyPayButtonFragment"
         android:name="com.application.melanieh.kk.shopping.PayWithStripeBtnFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/androidPayBtnFragment"
-        app:layout_constraintTop_toBottomOf="@+id/continueShoppingBtnFragment" />
+        android:layout_height="wrap_content"/>
     <!-- only shows when Android Pay is not available/set up -->
     <fragment
         android:id="@+id/androidPayBtnFragment"
         android:name="com.google.android.gms.wallet.fragment.SupportWalletFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/stripeOnlyPayButtonFragment" />
+        android:layout_height="wrap_content"/>
 
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

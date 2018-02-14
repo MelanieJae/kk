@@ -13,18 +13,28 @@ public class CartItem implements Parcelable {
 
     // variables/attributes
     private String itemName;
+    private String itemVariety;
     private int itemQty;
     private double itemUnitPrice;
-    private String customerNotes;
     private double shippingEstimate;
-    String[] cartItemParamStrings = {itemName, "" + itemQty, "" + itemUnitPrice, "" + shippingEstimate, customerNotes};
+    String[] cartItemParamStrings = {itemName, itemVariety, "" + itemQty,
+            "" + itemUnitPrice, "" + shippingEstimate};
 
-    public CartItem(String itemName, int itemQty, double itemUnitPrice, String customerNotes, double shippingEstimate) {
+    public CartItem(String itemName, String itemVariety,
+                    int itemQty, double itemUnitPrice, double shippingEstimate) {
         this.itemName = itemName;
+        this.itemVariety = itemVariety;
         this.itemQty = itemQty;
         this.itemUnitPrice = itemUnitPrice;
-        this.customerNotes = customerNotes;
         this.shippingEstimate = shippingEstimate;
+    }
+
+    public String getItemVariety() {
+        return itemVariety;
+    }
+
+    public void setItemVariety(String itemVariety) {
+        this.itemVariety = itemVariety;
     }
 
     public String getItemName() {
@@ -49,14 +59,6 @@ public class CartItem implements Parcelable {
 
     public void setItemUnitPrice(double itemUnitPrice) {
         this.itemUnitPrice = itemUnitPrice;
-    }
-
-    public String getCustomerNotes() {
-        return customerNotes;
-    }
-
-    public void setCustomerNotes(String customerNotes) {
-        this.customerNotes = customerNotes;
     }
 
     public double getShippingEstimate() {
@@ -103,9 +105,9 @@ public class CartItem implements Parcelable {
     public String toString() {
         return "CartItem{" +
                 "itemName='" + itemName + '\'' +
-                ", itemQty=" + itemQty +
+                "itemVariety='" + itemVariety + '\'' +
+                ", itemQty=" + itemQty + '\'' +
                 ", itemUnitPrice=" + itemUnitPrice +
-                ", customerNotes='" + customerNotes + '\'' +
                 ", shippingEstimate=" + shippingEstimate +
                 ", cartItemParamStrings=" + Arrays.toString(cartItemParamStrings) +
                 '}';

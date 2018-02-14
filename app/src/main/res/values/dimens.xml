@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer name="list_item_column_count">2</integer>
+    <integer name="qty_picker_min_value">1</integer>
+    <integer name="qty_picker_max_value">20</integer>
 
     <!-- buttons -->
     <dimen name="btn_elevation">2dp</dimen>
@@ -19,6 +21,10 @@
     <dimen name="toolbar_logo_layout_height">100dp</dimen>
     <dimen name="toolbar_elevation">4dp</dimen>
 
+    <!-- detail screen collapsing toolbar -->
+    <!-- animation values -->
+    <dimen name="size_default_height">320dp</dimen>
+
     <!-- search_result cardviews -->
     <dimen name="category_product_item_card_elevation">4dp</dimen>
     <dimen name="category_product_item_card_layout_margin">6dp</dimen>
@@ -31,10 +37,12 @@
     <dimen name="horiz_margin">16dp</dimen>
     <dimen name="vert_margin">16dp</dimen>
 
-    <!-- text sizes -->
+    <!-- font sizes -->
     <dimen name="small_text_size">18sp</dimen>
     <dimen name="medium_text_size">20sp</dimen>
     <dimen name="large_text_size">24sp</dimen>
+    <dimen name="cart_item_name_text_size">32sp</dimen>
+    <dimen name="product_detail_screen_text_size">42sp</dimen>
 
     <!-- widget -->
     <dimen name="widget_default_height">150dp</dimen>
@@ -44,13 +52,13 @@
     <dimen name="widget_margin">8dp</dimen>
     <dimen name="widget_text_size">16sp</dimen>
 
-    <!-- recyclerview items -->
+    <!-- shopping cart recyclerview items -->
     <dimen name="item_width">200dp</dimen>
     <dimen name="text_margin">16dp</dimen>
-    <dimen name="list_horiz_margin">4dp</dimen>
-    <dimen name="list_vert_margin">4dp</dimen>
-    <dimen name="list_item_horiz_margin">4dp</dimen>
-    <dimen name="list_item_vert_margin">4dp</dimen>
+    <dimen name="list_horiz_margin">2dp</dimen>
+    <dimen name="list_vert_margin">2dp</dimen>
+    <dimen name="list_item_horiz_margin">2dp</dimen>
+    <dimen name="list_item_vert_margin">2dp</dimen>
     <dimen name="list_item_text_size">32sp</dimen>
     <dimen name="card_item_elevation">4dp</dimen>
     <dimen name="card_item_layout_margin">6dp</dimen>
@@ -58,7 +66,7 @@
     <dimen name="cart_item_text_size">28sp</dimen>
     <dimen name="item_grid_cell_width_label">250dp</dimen>
     <dimen name="item_grid_cell_width_value">100dp</dimen>
-    <dimen name="item_grid_cell_height">60dp</dimen>
+    <dimen name="item_grid_cell_height">40dp</dimen>
 
     <!-- main list activity -->
     <!-- Picasso resize dimensions, appbar image -->

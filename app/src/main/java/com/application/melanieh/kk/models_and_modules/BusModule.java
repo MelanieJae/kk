@@ -1,13 +1,12 @@
 package com.application.melanieh.kk.models_and_modules;
 
+import com.application.melanieh.kk.KKApplication;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import io.reactivex.BackpressureStrategy;
-import io.reactivex.Flowable;
-import io.reactivex.FlowableEmitter;
-import io.reactivex.FlowableOnSubscribe;
+import io.reactivex.subjects.PublishSubject;
 
 /**
  * Created by melanieh on 1/22/18.
@@ -18,14 +17,16 @@ import io.reactivex.FlowableOnSubscribe;
 @Module
 public class BusModule {
 
+    KKApplication application;
+
+    public BusModule(KKApplication application) {
+        this.application = application;
+    }
+
+    // cart item eventbus singleton
     @Provides
     @Singleton
-    static Flowable<CartItem> provideCartItem() {
-        return Flowable.create((new FlowableOnSubscribe<CartItem>() {
-            @Override
-            public void subscribe(FlowableEmitter<CartItem> e) throws Exception {
+    PublishSubject<CartItem> provideCartItemObservable() { return PublishSubject.create(); }
 
-            }
-        }), BackpressureStrategy.LATEST);
-    }
+
 }

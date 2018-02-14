@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,8 +15,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.application.melanieh.kk.Constants;
+import com.application.melanieh.kk.KKApplication;
 import com.application.melanieh.kk.R;
 import com.application.melanieh.kk.models_and_modules.Product;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
@@ -38,15 +39,22 @@ public class ProductCategoryDetailFragment extends Fragment {
 
     @NonNull @BindView(R.id.category_products_rv)
     RecyclerView categoryProductsRV;
+
+    static Picasso picassoInstance;
+
     static String category;
+    static String[] categoryProductLabels;
+    static String[] imageUrls;
+    ArrayList<Integer> drawables;
+
+    boolean candleCategory;
+    boolean giftsCategory;
+    boolean giftBasketsCategory;
+
     // necessary for using ButterKnife in recycler view
     Unbinder unbinder;
 
     RecyclerView.LayoutManager rvLayoutManager;
-    String[] categoryProductLabels;
-    int[] tempProductDrawables;
-    ArrayList<Product> categoryProducts;
-    static FragmentManager fragmentManager;
 
     public static ProductCategoryDetailFragment newInstance() {
         ProductCategoryDetailFragment fragment = new ProductCategoryDetailFragment();
@@ -62,37 +70,31 @@ public class ProductCategoryDetailFragment extends Fragment {
         Timber.d("onCreate:");
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        categoryProducts = new ArrayList<>();
-
-        /** initialize shopping cart array list here
-         * so it is not re-created in the product detail screen each time a new product
-         * is added to the cart;
-         * this also makes transferring the items here (i.e. the CartItemArrayList) into a CartManager
-         * object simpler
-         *
-         */
+        picassoInstance = KKApplication.getPicassoInstance();
 
         /** populate category products list **/
         category = getActivity().getIntent().getStringExtra(Constants.CATEGORY_EXTRA_KEY);
-
-        boolean isCandleCategory = Pattern.compile(Pattern.quote("candle"),
+        candleCategory = Pattern.compile(Pattern.quote("candle"),
                 Pattern.CASE_INSENSITIVE).matcher(category).find();
-        boolean isGiftsCategory = Pattern.compile(Pattern.quote("gifts"),
+        giftsCategory = Pattern.compile(Pattern.quote("gifts"),
+                Pattern.CASE_INSENSITIVE).matcher(category).find();
+        giftBasketsCategory = Pattern.compile(Pattern.quote("gifts"),
                 Pattern.CASE_INSENSITIVE).matcher(category).find();
 
-        if (isCandleCategory) {
-            /** populate category labels **/
-            categoryProductLabels = getResources().getStringArray(R.array.candle_categories);
-            tempProductDrawables = getResources().getIntArray(R.array.temp_category_product_drawables);
-        } else if (isGiftsCategory) {
-            categoryProductLabels = getResources().getStringArray(R.array.gift_categories);
-            Timber.d("categoryProductLabels" + categoryProductLabels);
-        } else {
-            categoryProductLabels = getResources().getStringArray(R.array.gift_basket_categories);
-        }
+        categoryProductLabels = new String[]{"Jar Candles", "Tealights", "Tarts", "Tart burners", "Reed diffusers",
+        "Wood wick candles"};
+//        categoryProductLabels = generateLabels();
+        Timber.d("categoryProductLabels:" + categoryProductLabels[0]);
 
-        Timber.d("categoryProductLabels" + categoryProductLabels);
-        fragmentManager = getFragmentManager();
+
+//        imageUrls = new String[]{Constants.JAR_CANDLES_URL,
+//                Constants.TEALIGHTS_URL,
+//                Constants.GIFTS_CATEGORY_IMAGE_URL,
+//                Constants.JAR_CANDLES_URL,
+//                Constants.TEALIGHTS_URL,
+//                Constants.GIFTS_CATEGORY_IMAGE_URL};
+
+
     }
 
     @Nullable
@@ -102,19 +104,10 @@ public class ProductCategoryDetailFragment extends Fragment {
         Timber.d("onCreateView:");
 
         View rootView = inflater.inflate(R.layout.fragment_category_detail, container, false);
-        unbinder = ButterKnife.bind(getActivity(), rootView);
-        ButterKnife.setDebug(true);
-        for (int i = 0; i < categoryProductLabels.length; i++) {
-            categoryProducts.add(new Product("tealights", "$1", null,
-                    R.drawable.candle_category_sample));
-        }
-        Timber.d("categoryProductLabels:" + categoryProductLabels);
-        Timber.d("tempProductDrawables:" + tempProductDrawables);
-        Timber.d("CategoryProducts:" + categoryProducts);
-        CategoryProductRVAdapter rvAdapter = new CategoryProductRVAdapter(getActivity(), categoryProducts);
         rvLayoutManager = getLayoutManager();
         categoryProductsRV = (RecyclerView)rootView.findViewById(R.id.category_products_rv);
         Timber.d("rv: " + categoryProductsRV);
+        CategoryProductRVAdapter rvAdapter = new CategoryProductRVAdapter(getActivity());
         categoryProductsRV.setLayoutManager(rvLayoutManager);
         categoryProductsRV.setAdapter(rvAdapter);
 
@@ -125,7 +118,7 @@ public class ProductCategoryDetailFragment extends Fragment {
     public void onDestroyView() {
         Timber.d("onDestroyView:");
         super.onDestroyView();
-        unbinder.unbind();
+//        unbinder.unbind();
     }
 
     private RecyclerView.LayoutManager getLayoutManager() {
@@ -146,7 +139,6 @@ public class ProductCategoryDetailFragment extends Fragment {
         return glm;
     }
 
-
     /**
      * Created by melanieh on 6/5/17.
      */
@@ -155,11 +147,18 @@ public class ProductCategoryDetailFragment extends Fragment {
             extends RecyclerView.Adapter<CategoryProductRVAdapter.ProductViewHolder> {
 
         private Context context;
-        private ArrayList<Product> productsList;
+        String[] imageURLList;
+        ArrayList<Integer> drawables;
 
-        public CategoryProductRVAdapter(Context context, ArrayList<Product> productsList) {
+        boolean candleCategory = Pattern.compile(Pattern.quote("candle"),
+                Pattern.CASE_INSENSITIVE).matcher(category).find();
+        boolean giftsCategory = Pattern.compile(Pattern.quote("gifts"),
+                Pattern.CASE_INSENSITIVE).matcher(category).find();
+        boolean giftBasketsCategory = Pattern.compile(Pattern.quote("gifts"),
+                Pattern.CASE_INSENSITIVE).matcher(category).find();
+
+        public CategoryProductRVAdapter(Context context) {
             this.context = context;
-            this.productsList = productsList;
         }
 
         @Override
@@ -168,20 +167,34 @@ public class ProductCategoryDetailFragment extends Fragment {
 
             View view = LayoutInflater.from(context)
                     .inflate(R.layout.product_list_item, parent, false);
+            drawables = new ArrayList<>();
+            drawables.add(R.drawable.candle_category_sample);
+            drawables.add(R.drawable.candle_category_sample);
+            drawables.add(R.drawable.candle_category_sample);
+            drawables.add(R.drawable.candle_category_sample);
+            drawables.add(R.drawable.candle_category_sample);
+            drawables.add(R.drawable.candle_category_sample);
             return new ProductViewHolder(view);
         }
 
         @Override
         public void onBindViewHolder(final ProductViewHolder holder, final int position) {
             Timber.d("onBindViewHolder:");
-            holder.product = productsList.get(position);
-            final int imageResId = holder.product.getProductImageResId();
-            final String imageUrlString = holder.product.getProductImageUrlString();
-            final String productName = holder.product.getName();
-            final String cost = holder.product.getCost();
+            final int imageResId = drawables.get(position);
+            Timber.d("drawable:" + drawables.get(position));
 
-//            ImageHandler.getSharedInstance(holder.itemView.getContext()).load(imageUrlString).
-//                    fit().centerCrop().into(holder.productIV);
+//            final String imageUrlString = imageUrls[position];
+            Timber.d("categoryProductLabels:" + categoryProductLabels[0]);
+            final String productName = categoryProductLabels[position];
+            final String cost = "$1";
+
+//            // load image into adapter position via Picasso and adjust text color to match
+//            // list item palette
+//            picassoInstance.with(holder.itemView.getContext()).load(imageResId).
+//                    fit().centerCrop().into(holder.productIV,
+//                    PicassoPalette.with(imageResId, holder.productIV).use(PicassoPalette.Profile.VIBRANT)
+//                            .intoTextColor(holder.productName, PicassoPalette.Swatch.BODY_TEXT_COLOR));
+
             holder.productIV.setImageResource(imageResId);
             holder.productName.setText(productName);
             holder.cost.setText(cost);
@@ -194,7 +207,7 @@ public class ProductCategoryDetailFragment extends Fragment {
                     launchproductDetail.putExtra(Constants.CATEGORY_EXTRA_KEY, category);
                     launchproductDetail.putExtra(Constants.TRANSITION_TEXT_KEY_NAME, productName);
                     launchproductDetail.putExtra(Constants.TRANSITION_TEXT_KEY_COST, cost);
-                    launchproductDetail.putExtra(Constants.TRANSITION_IMAGE_KEY, imageResId);
+//                    launchproductDetail.putExtra(Constants.TRANSITION_IMAGE_KEY, imageResId);
                     context.startActivity(launchproductDetail);
                 }
             });
@@ -202,8 +215,8 @@ public class ProductCategoryDetailFragment extends Fragment {
 
         @Override
         public int getItemCount() {
-            Timber.d("getItemCount:" + productsList.size());
-            return productsList.size();
+            Timber.d("getItemCount:" + categoryProductLabels.length);
+            return categoryProductLabels.length;
         }
 
         /**
@@ -227,4 +240,33 @@ public class ProductCategoryDetailFragment extends Fragment {
             }
         }
     }
+
+    private String[] generateLabels() {
+        String[] labels;
+
+        if (candleCategory) {
+            labels = getResources().getStringArray(R.array.candle_categories);
+        } else if (giftsCategory) {
+            labels = getResources().getStringArray(R.array.gift_categories);
+        } else {
+            labels = getResources().getStringArray(R.array.gift_basket_categories);
+        }
+        return labels;
+    }
+
+    private String[] generateImageUrls() {
+        String[] urls;
+
+        if (candleCategory) {
+            urls = getResources().getStringArray(R.array.candle_categories);
+        } else if (giftsCategory) {
+            urls = getResources().getStringArray(R.array.gift_categories);
+        } else {
+            urls = getResources().getStringArray(R.array.gift_basket_categories);
+        }
+        return urls;
+    }
+
+
+
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- label arrays -->
     <string-array name="product_categories">
         <item>Candles</item>
         <item>Gifts</item>
@@ -11,7 +12,6 @@
         <item>Tarts</item>
         <item>Tealights</item>
         <item>Tart burners</item>
-        <item>Electric tart warmers</item>
         <item>Reed Diffusers</item>
         <item>Wood Wick Candles</item>
     </string-array>
@@ -19,6 +19,8 @@
     <string-array name="gift_categories">
         <item>Lotions</item>
         <item>Primitive Items</item>
+        <item>Electric tart warmers</item>
+
     </string-array>
 
     <string-array name="gift_basket_categories">
@@ -31,13 +33,32 @@
         <item>Holidays</item>
     </string-array>
 
+    <!-- image url or resId arrays -->
     <integer-array name="temp_category_product_drawables">
         <item>@drawable/candle_category_sample</item>
         <item>@drawable/gift_basket_category_sample</item>
         <item>@drawable/gifts_category_sample</item>
     </integer-array>
 
+    <string-array name="candle_categories_image_urls">
+        <item>Constants.JAR_CANDLES_URL</item>
+        <item>Constants.TARTS_URL</item>
+        <item>Constants.TEALIGHTS_URL</item>
+        <item>Constants.TART_BURNERS_URL</item>
+        <item>Constants.REED_DIFFUSERS_URL</item>
+        <item>Constants.WOOD_WICK_CANDLES_URL</item>
+    </string-array>
+
+    <string-array name="gift_categories_image_urls">
+        <item>Constants.LOTIONS_URL</item>
+        <item>Constants.PRIMITIVE_ITEMS_URL</item>
+        <item>Constants.ELECTRIC_TART_WARMERS_URL</item>
+
+    </string-array>
+
+    <!-- array for variety picker -->
     <string-array name="candle_varieties">
+        <item>Select a Variety</item>
         <item>Cinnamon</item>
         <item>Lavender</item>
         <item>Linen</item>

@@ -1,62 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridLayout
+<TableLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:rowCount="4"
-    android:columnCount="@integer/list_item_column_count">
+    android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/itemNameLabel"
-        tools:text="Item Name: "
-        android:layout_width="@dimen/item_grid_cell_width_label"
-        android:layout_height="@dimen/item_grid_cell_height"/>
-    <TextView
-        android:id="@+id/itemNameValue"
-        tools:text="Tealight"
-        android:layout_width="@dimen/item_grid_cell_width_value"
-        android:layout_height="@dimen/item_grid_cell_height"/>
-    <TextView
-        android:id="@+id/qtyNameLabel"
-        tools:text="Qty: "
-        android:layout_width="@dimen/item_grid_cell_width_label"
-        android:layout_height="@dimen/item_grid_cell_height"/>
-    <TextView
-        android:id="@+id/qtyNameValue"
-        tools:text="10"
-        android:layout_width="@dimen/item_grid_cell_width_value"
-        android:layout_height="@dimen/item_grid_cell_height"/>
-    <TextView
-        android:id="@+id/itemUnitPriceLabel"
-        tools:text="Unit Price: "
-        android:layout_width="@dimen/item_grid_cell_width_label"
-        android:layout_height="@dimen/item_grid_cell_height"/>
-    <TextView
-        android:id="@+id/itemUnitPriceValue"
-        tools:text="$1"
-        android:layout_width="@dimen/item_grid_cell_width_value"
-        android:layout_height="@dimen/item_grid_cell_height"/>
-    <TextView
-        android:id="@+id/itemTotalPriceLabel"
-        tools:text="Total Price: "
-        android:layout_width="@dimen/item_grid_cell_width_label"
-        android:layout_height="@dimen/item_grid_cell_height"/>
-    <TextView
-        android:id="@+id/itemTotalPriceValue"
-        tools:text="$10"
-        android:layout_width="@dimen/item_grid_cell_width_value"
-        android:layout_height="@dimen/item_grid_cell_height"/>
-    <TextView
-        android:id="@+id/customerNotesLabel"
-        tools:text="Customer Notes: "
-        android:layout_width="@dimen/item_grid_cell_width_label"
-        android:layout_height="@dimen/item_grid_cell_height"/>
-    <TextView
-        android:id="@+id/customerNotesValue"
-        tools:text="set of 10"
-        android:layout_width="@dimen/item_grid_cell_width_value"
-        android:layout_height="@dimen/item_grid_cell_height"/>
+    <TableRow>
+        <TextView
+            android:id="@+id/itemNameValue"
+            android:textSize="@dimen/cart_item_name_text_size"
+            android:layout_width="300dp"
+            android:layout_height="40dp"/>
+    </TableRow>
 
-</GridLayout>
+    <TableRow>
+        <TextView
+            android:id="@+id/itemVarietyValue"
+            android:textSize="@dimen/cart_item_name_text_size"
+            android:layout_width="300dp"
+            android:layout_height="40dp"/>
+    </TableRow>
+
+    <TableRow>
+        <TextView
+            android:id="@+id/qtyLabel"
+            android:text="Qty: "
+            android:textSize="@dimen/large_text_size"
+            android:layout_width="300dp"
+            android:layout_height="30dp"/>
+        <TextView
+            android:id="@+id/qtyValue"
+            android:textSize="@dimen/large_text_size"
+            android:layout_width="300dp"
+            android:layout_height="30dp"/>
+    </TableRow>
+
+    <TableRow>
+        <TextView
+            android:id="@+id/itemTotalPriceLabel"
+            android:textSize="@dimen/large_text_size"
+            android:text="Total Price: "
+            android:layout_width="300dp"
+            android:layout_height="30dp"/>
+        <TextView
+            android:id="@+id/itemTotalPriceValue"
+            android:textSize="@dimen/large_text_size"
+            android:layout_width="300dp"
+            android:layout_height="30dp"/>
+    </TableRow>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/colorPrimaryDark"/>
+
+</TableLayout>

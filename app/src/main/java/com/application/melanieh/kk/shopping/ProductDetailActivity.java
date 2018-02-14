@@ -6,16 +6,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.application.melanieh.kk.CartItemListener;
-import com.application.melanieh.kk.Constants;
 import com.application.melanieh.kk.R;
 import com.application.melanieh.kk.checkout.CheckoutActivity;
 import com.application.melanieh.kk.models_and_modules.CartItem;
 
+import io.reactivex.subjects.PublishSubject;
 import timber.log.Timber;
 
-public class ProductDetailActivity extends AppCompatActivity implements CartItemListener{
+public class ProductDetailActivity extends AppCompatActivity {
 
+    io.reactivex.functions.Consumer<CartItem> cartItemConsumer;
+    PublishSubject<CartItem> cartItemObservable;
     /**
      * event bus for publishing cart updates when the add to cart FAB is pushed
      */
@@ -26,6 +27,7 @@ public class ProductDetailActivity extends AppCompatActivity implements CartItem
         Timber.d("onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail);
+
     }
 
     @Override
@@ -43,19 +45,6 @@ public class ProductDetailActivity extends AppCompatActivity implements CartItem
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void passCartItem(CartItem cartItem) {
-        Timber.d("ProductDetailActivity: " + cartItem);
-
-        AddToCartBtnFragment updatedCartBtnFrag = AddToCartBtnFragment.newInstance();
-        Timber.d("ProdDetAct post new instance: " +
-                updatedCartBtnFrag.getArguments().getParcelable(Constants.CART_ITEMS_DATA_KEY).toString());
-        getFragmentManager().beginTransaction()
-                .replace(R.id.addToCartBtnFragment,
-                        updatedCartBtnFrag)
-                .commit();
     }
 
 }

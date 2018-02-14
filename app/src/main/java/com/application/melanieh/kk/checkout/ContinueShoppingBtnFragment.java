@@ -47,13 +47,12 @@ public class ContinueShoppingBtnFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_continue_shopping_btn, container, false);
-        unbinder = ButterKnife.bind(getActivity(), rootView);
+        ButterKnife.bind(this, rootView);
         return rootView;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
     }
 }

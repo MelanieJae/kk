@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.application.melanieh.kk.BuildConfig;
 import com.application.melanieh.kk.Constants;
+import com.application.melanieh.kk.KKApplication;
 import com.application.melanieh.kk.PaymentProcessor;
 import com.application.melanieh.kk.R;
 import com.application.melanieh.kk.models_and_modules.CartItem;
@@ -61,7 +62,7 @@ public class CheckoutActivity extends StripeAndroidPayActivity implements Paymen
         setContentView(R.layout.activity_checkout);
 
         // get instance of Android Pay Configuration and require shipping address from customer
-        AndroidPayConfiguration payConfiguration = AndroidPayConfiguration.getInstance();
+        AndroidPayConfiguration payConfiguration = KKApplication.initAndroidPayConfig();
 
         // this class is an observer/subscriber to the AddtoCartFragment's cart content updates
 

@@ -21,9 +21,25 @@ public class Constants {
     public static final String TRANSITION_TEXT_KEY_COST = "transition text-product cost";
     public static final String CART_ITEMS_DATA_KEY = "Cart Item data";
 
+    /** image URLs */
+    public static final String CANDLES_CATEGORY_IMAGE_URL =
+            "https://pixabay.com/get/eb3cb80c21f7073ecd0b4200ee4a419ee66ae3d018b6154392f5c871_1920.jpg";
+    public static final String GIFTS_CATEGORY_IMAGE_URL =
+            "https://pixabay.com/get/eb3cb8072dfd023ecd0b4200ee4a419ee66ae3d018b6154392f8c67d_1920.jpg";
+    public static final String GIFT_BASKETS_CATEGORY_IMAGE_URL =
+            "https://pixabay.com/get/eb36b9062ff3083ecd0b4200ee4a419ee66ae3d018b6154392f9c47d_1920.jpg";
 
-    /** sample image */
-//    public static final String SAMPLE_IMAGE_URL = BuildConfig.SAMPLE_IMAGE_URL;
+    public static final String JAR_CANDLES_URL =
+            "https://i.pinimg.com/736x/d3/97/d4/d397d47ef453e8dad28e5255394578a7--jar-candles-candle-making.jpg";
+    public static final String TEALIGHTS_URL =
+            "https://pixabay.com/get/e83db8062ff7083ecd0b4200ee4a419ee66ae3d018b6154594f0c171_1920.jpg";
+//    public static final String TART_BURNERS_URL =;
+//    public static final String ELECTRIC_TART_WARMERS_URL =;
+//    public static final String REED_DIFFUSERS_URL =;
+//    public static final String WOOD_WICK_CANDLES_URL =;
+
+    public static final String LOTIONS_URL =
+            "https://pixabay.com/get/e831b70b2afd043ecd0b4200ee4a419ee66ae3d018b6154594f3c07c_1920.png";
 
     /** query String for downloading photos from business' Facebook page **/
     public static final String FB_GRAPH_API_QUERY_STRING

@@ -36,6 +36,7 @@ android {
     buildTypes.each {
 //        it.buildConfigField "String", "SAMPLE_IMAGE_URL", SampleImageUrl
         it.buildConfigField "String", "STRIPE_TEST_PUBLISHABLE_KEY", StripeTestPublishableKey
+        it.buildConfigField "String", "ANDROID_PAY_CONFIG_KEY", AndroidPayConfigTestKey
 
     }
 }

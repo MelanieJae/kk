@@ -1,6 +1,5 @@
 package com.application.melanieh.kk.checkout;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,7 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.application.melanieh.kk.CartItemRVAdapter;
 import com.application.melanieh.kk.Constants;
+import com.application.melanieh.kk.KKApplication;
 import com.application.melanieh.kk.R;
 import com.application.melanieh.kk.models_and_modules.CartItem;
 import com.google.android.gms.wallet.Cart;
@@ -22,7 +23,8 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.subjects.ReplaySubject;
 import timber.log.Timber;
 
 /**
@@ -34,10 +36,11 @@ public class ShoppingCartFragment extends Fragment {
     ArrayList<CartItem> cartItems;
     @BindView(R.id.cart_item_rv)
     RecyclerView cartItemRV;
-    private CompositeDisposable disposables;
     @BindView(R.id.rv_emptyview_text)
     TextView emptyViewTV;
     CartManager cartManager;
+
+    CartItemRVAdapter rvAdapter;
 
     // this class is an observer/subscriber to cart update events (observable)
     // published by the bus in the AddToCartFragment
@@ -54,14 +57,26 @@ public class ShoppingCartFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        cartItems = new ArrayList<>();
+
     }
 
     @Nullable
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_shopping_cart, container, false);
-        ButterKnife.bind(getActivity(), rootView);
+        ButterKnife.bind(this, rootView);
+        displayCart();
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+
+
+
     }
 
     @Override
@@ -69,93 +84,6 @@ public class ShoppingCartFragment extends Fragment {
         super.onPause();
     }
 
-
-    /**
-     * Created by melanieh on 6/28/17.
-     */
-
-    public static class CartItemRVAdapter
-            extends RecyclerView.Adapter<CartItemRVAdapter.CartItemViewHolder> {
-
-        private Context context;
-        private ArrayList<CartItem> cartItems;
-
-        public CartItemRVAdapter(Context context, ArrayList<CartItem> cartItems) {
-            this.context = context;
-            this.cartItems = cartItems;
-        }
-
-        @Override
-        public CartItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            Timber.d("onCreateViewHolder:");
-
-            View view = LayoutInflater.from(context)
-                    .inflate(R.layout.cart_item, parent, false);
-            return new CartItemViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder
-                (final CartItemViewHolder holder, final int position) {
-            Timber.d("onBindViewHolder:");
-            Timber.d("holder.itemqtyvalue" + holder.itemQtyValue);
-            holder.cartItem = cartItems.get(position);
-            Timber.d("holder.cartItem.qty" + holder.cartItem.getItemQty());
-            final String productName = holder.cartItem.getItemName();
-            final String qty = "" + holder.cartItem.getItemQty();
-            final String price = "" + holder.cartItem.getItemUnitPrice() * holder.cartItem.getItemQty();
-
-//            ImageHandler.getSharedInstance(holder.itemView.getContext()).load(imageUrlString).
-//                    fit().centerCrop().into(holder.productIV);
-            holder.itemNameValue.setText(holder.cartItem.getItemName());
-            holder.itemQtyValue.setText(holder.cartItem.getItemQty());
-            holder.itemUnitPriceValue.setText("" + holder.cartItem.getItemUnitPrice());
-            holder.itemTotalPriceValue.setText("" + holder.cartItem.getItemUnitPrice() *
-                    holder.cartItem.getItemQty());
-            holder.customerNotesValue.setText(holder.cartItem.getCustomerNotes());
-        }
-
-        @Override
-        public int getItemCount() {
-            Timber.d("getItemCount:" + cartItems.size());
-            return cartItems.size();
-        }
-
-        /**
-         * Created by melanieh on 6/28/17.
-         */
-
-        public static class CartItemViewHolder extends RecyclerView.ViewHolder {
-
-            @BindView(R.id.itemNameValue)
-            TextView itemNameValue;
-            @BindView(R.id.qty_value)
-            TextView itemQtyValue;
-            @BindView(R.id.itemUnitPriceValue)
-            TextView itemUnitPriceValue;
-            @BindView(R.id.itemTotalPriceValue)
-            TextView itemTotalPriceValue;
-            @BindView(R.id.customerNotesValue)
-            TextView customerNotesValue;
-
-            private CartItem cartItem;
-
-            public CartItemViewHolder(View itemView) {
-                super(itemView);
-                ButterKnife.bind(this, itemView);
-            }
-        }
-    }
-
-    public void displayCart(ArrayList<CartItem> cartItems) {
-        if (cartItems == null) {
-            emptyViewTV.setText("Your cart is empty.");
-        } else {
-            CartItemRVAdapter rvAdapter = new CartItemRVAdapter(getContext(), cartItems);
-            cartItemRV.setLayoutManager(new LinearLayoutManager(getContext()));
-            cartItemRV.setAdapter(rvAdapter);
-        }
-    }
 
     /**
      * RxAndroid event bus for cart update pub-sub pattern; GP Cart is the pub and the pay with stripe button
@@ -196,6 +124,25 @@ public class ShoppingCartFragment extends Fragment {
                             "Bad line items detected or bad total price string for the cart");
             return null;
         }
+    }
+
+    private void displayCart() {
+
+        ReplaySubject<CartItem> cartItemObservable = KKApplication.getObservable();
+        Timber.d("cartItemObservable: " + cartItemObservable.toString());
+        Consumer<CartItem> cartItemConsumer = new Consumer<CartItem>() {
+            @Override
+            public void accept(CartItem cartItem) throws Exception {
+                cartItems.add(cartItem);
+
+            }
+        };
+
+        cartItemObservable.subscribe(cartItemConsumer);
+        rvAdapter = new CartItemRVAdapter(getContext(), cartItems);
+        cartItemRV.setLayoutManager(new LinearLayoutManager(getContext()));
+        cartItemRV.setAdapter(rvAdapter);
+
     }
 
 }

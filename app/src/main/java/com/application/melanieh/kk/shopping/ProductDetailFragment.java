@@ -1,35 +1,31 @@
 package com.application.melanieh.kk.shopping;
 
-import android.app.Service;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 
-import com.application.melanieh.kk.Constants;
 import com.application.melanieh.kk.KKApplication;
 import com.application.melanieh.kk.R;
 import com.application.melanieh.kk.checkout.CheckoutActivity;
+import com.application.melanieh.kk.com.application.kk.customviews.ZoomOutPullDownAnimation;
 import com.application.melanieh.kk.models_and_modules.CartItem;
 
-import java.util.Arrays;
-import java.util.List;
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.ReplaySubject;
 import timber.log.Timber;
 
 /**
@@ -38,26 +34,29 @@ import timber.log.Timber;
 
 public class ProductDetailFragment extends Fragment {
 
-    InputMethodManager imm;
-    private int variety = 0;
+    @Inject
+    CartItem cartItem;
+    String variety;
+    ReplaySubject<CartItem> cartItemObservable;
+    Consumer<CartItem> cartItemConsumer;
 
     @BindView(R.id.product_iv)
+//    ZoomOutPullDownAnimation zopdImage;
     ImageView productImage;
     @BindView(R.id.name)
     TextView productName;
     @BindView(R.id.cost)
     TextView cost;
-    @BindView(R.id.product_variety_spinner)
-    Spinner varietySpinner;
-    @BindView(R.id.qty_label)
-    TextView qtyLabel;
-    @BindView(R.id.qty_value)
-    EditText qtyValue;
-    @BindView(R.id.cust_notes_label)
-    TextView custNotesLabel;
-    @BindView(R.id.cust_requests_notes)
-    EditText custNotesET;
-
+    @BindView(R.id.variety_picker)
+    NumberPicker varietyPicker;
+    @BindView(R.id.qty_picker)
+    NumberPicker qtyPicker;
+    @BindView(R.id.observable_test)
+    TextView observableTestTV;
+    @OnClick(R.id.add_to_cart_btn)
+    public void onClick(View view) {
+        addToCart();
+    }
 
     public static ProductDetailFragment newInstance() {
         ProductDetailFragment fragment = new ProductDetailFragment();
@@ -71,8 +70,18 @@ public class ProductDetailFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        // ensures CartItem PublishSubject is a singleton by managing the application component creation
-        // through the application class
+        cartItemObservable = KKApplication.getObservable();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        cartItemObservable.unsubscribeOn(Schedulers.io());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -93,76 +102,89 @@ public class ProductDetailFragment extends Fragment {
 
         Timber.d("onCreateView:");
 
-        View rootView = inflater.inflate(R.layout.fragment_product_detail, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_product_detail, container,
+                false);
         ButterKnife.bind(this, rootView);
-
-        //control visibility of keyboard to only show when customer notes and quantity fields are clicked on
-        imm = (InputMethodManager)getActivity().getSystemService(Service.INPUT_METHOD_SERVICE);
-        // default state for keyboard is hidden
-        showKeyboard(qtyValue);
-        showKeyboard(custNotesET);
+        // zoom out-pull down animation for image in toolbar
+        ZoomOutPullDownAnimation zopdImage = new ZoomOutPullDownAnimation(getActivity());
 
         productImage.setImageResource(R.drawable.candle_category_sample);
+        zopdImage.setZoomRatio(ZoomOutPullDownAnimation.ZOOM_X2);
+        zopdImage.setParallaxImageView(productImage);
+
         productName.setText("Tealights");
         cost.setText("$1");
-        qtyValue.setText("1");
-        loadSpinner();
+
+        loadVarietyPicker();
+        loadQtyPicker();
         // TODO this should be an and/or; keeping as "or" and catching qty = 0 in a null check/dialog
-//        if (Integer.parseInt(qtyValue.toString()) > 0 || custNotesET.getText() != null)  {
-        sendCartItem();
 //        }
+
         return rootView;
     }
 
-    /**
-     * Setup the dropdown spinner containing the available varieties of the product.
-     */
-    private void loadSpinner() {
-        // Create adapter for spinner. The list options are from the String array it will use
-        // the spinner will use the default layout
-        Resources res = getResources();
-        String[] items = res.getStringArray(R.array.candle_varieties);
-        List<String> spinnerItems = Arrays.asList(items);
+    private void loadQtyPicker() {
 
-        ArrayAdapter varietySpinnerAdapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.candle_varieties, android.R.layout.simple_spinner_dropdown_item);
-
-        // Specify dropdown layout style - simple list view with 1 item per line
-        varietySpinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-
-        // Bind the adapter to the spinner
-        varietySpinner.setAdapter(varietySpinnerAdapter);
+        // number picker main attributes
+        String[] pickerRange = new String[2];
+        pickerRange[0] = "Select Quantity";
+        pickerRange[1] = "1";
+        qtyPicker.setDisplayedValues(pickerRange);
+        qtyPicker.setMinValue(R.integer.qty_picker_min_value);
+//        qtyPicker.setMaxValue(R.integer.qty_picker_max_value);
+        qtyPicker.setWrapSelectorWheel(true);
 
         // Set the integer mSelected to the constant values
-        varietySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        varietyPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selection = (String) parent.getItemAtPosition(position);
-                if (!TextUtils.isEmpty(selection)) {
-
-                }
-            }
-
-            // Because AdapterView is an abstract class, onNothingSelected must be defined
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                variety = Constants.VARIETY_UNKNOWN;
+            public void onValueChange(NumberPicker numberPicker, int i, int i1) {
+                cartItem.setItemQty(i1);
+                Timber.d("loadQtyPicker: quantity " + i1);
             }
         });
+
     }
 
-    public void showKeyboard(View view) {
-        // reveal keyboard for these
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    private void loadVarietyPicker() {
+        String[] items = getResources().getStringArray(R.array.candle_varieties);
+        // number picker main attributes
+        varietyPicker.setDisplayedValues(items);
+        varietyPicker.setWrapSelectorWheel(true);
+
+        // Set the integer mSelected to the constant values
+        varietyPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker numberPicker, int i, int i1) {
+                variety = items[i1];
+                Timber.d("loadVarietyPicker: variety " + variety);
+                cartItem.setItemVariety("" + variety);
+            }
+        });
+
     }
 
-    private void sendCartItem() {
-        CartItem cartItem = new CartItem(productName.getText().toString(),
-                Integer.parseInt(qtyValue.getText().toString()),
-                1.0,
-                custNotesET.getText().toString(), 0.0);
-        Timber.d("sendCartItem: cartItem" + cartItem);
-        KKApplication.getApplicationComponent().getCartItem().publish();
+    private void addToCart() {
+        Timber.d("addToCart()");
+        // gather product info
+//        cartItem = new CartItem(productName.getText().toString(), variety, qtyPicker.getValue(),
+//                Integer.parseInt(cost.getText().toString()), 0.0);
+
+        cartItem = new CartItem("tealight", "cinnamon", 1,
+                1.0, 0.0);
+        cartItemObservable = KKApplication.getObservable();
+        Timber.d("cartItemObservable: " + cartItemObservable.toString());
+
+        Timber.d("cartItem: " + cartItem.toString());
+
+//        cartItemConsumer = new Consumer<CartItem>() {
+//            @Override
+//            public void accept(CartItem cartItem) throws Exception {
+//            }
+//        };
+
+//        cartItemObservable.subscribe(cartItemConsumer);
+        cartItemObservable.onNext(cartItem);
+
 
     }
 }

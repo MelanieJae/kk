@@ -19,6 +19,12 @@
         <item name="android:titleTextStyle">@style/ToolbarText</item>
     </style>
 
+    <style name="ProductDetailTextStyle" parent="ProductTextStyle">
+        <item name="android:textSize">@dimen/product_detail_screen_text_size</item>
+        <item name="android:textColor">@android:color/black</item>
+
+    </style>
+
     <style name="ToolbarText" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
         <item name="android:textColor">@android:color/white</item>
     </style>
