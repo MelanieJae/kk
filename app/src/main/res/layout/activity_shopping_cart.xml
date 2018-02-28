@@ -9,6 +9,6 @@
         android:id="@+id/shoppingCartFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.application.melanieh.kk.checkout.ShoppingCartFragment"/>
+        android:name="com.application.melanieh.kk.checkout.RetainShoppingCartFragment"/>
 
 </android.support.constraint.ConstraintLayout>

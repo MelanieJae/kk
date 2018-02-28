@@ -37,8 +37,10 @@ public class ProductDetailFragment extends Fragment {
     @Inject
     CartItem cartItem;
     String variety;
+    int qty;
     ReplaySubject<CartItem> cartItemObservable;
     Consumer<CartItem> cartItemConsumer;
+    int varietyValue = 0;
 
     @BindView(R.id.product_iv)
 //    ZoomOutPullDownAnimation zopdImage;
@@ -47,12 +49,12 @@ public class ProductDetailFragment extends Fragment {
     TextView productName;
     @BindView(R.id.cost)
     TextView cost;
+    @BindView(R.id.picker_readout)
+    TextView pickerReadoutTV;
     @BindView(R.id.variety_picker)
     NumberPicker varietyPicker;
     @BindView(R.id.qty_picker)
     NumberPicker qtyPicker;
-    @BindView(R.id.observable_test)
-    TextView observableTestTV;
     @OnClick(R.id.add_to_cart_btn)
     public void onClick(View view) {
         addToCart();
@@ -113,7 +115,7 @@ public class ProductDetailFragment extends Fragment {
         zopdImage.setParallaxImageView(productImage);
 
         productName.setText("Tealights");
-        cost.setText("$1");
+        cost.setText("1");
 
         loadVarietyPicker();
         loadQtyPicker();
@@ -128,17 +130,14 @@ public class ProductDetailFragment extends Fragment {
         // number picker main attributes
         String[] pickerRange = new String[2];
         pickerRange[0] = "Select Quantity";
-        pickerRange[1] = "1";
-        qtyPicker.setDisplayedValues(pickerRange);
-        qtyPicker.setMinValue(R.integer.qty_picker_min_value);
-//        qtyPicker.setMaxValue(R.integer.qty_picker_max_value);
+        qtyPicker.setMinValue(1);
+        qtyPicker.setMaxValue(20);
         qtyPicker.setWrapSelectorWheel(true);
 
         // Set the integer mSelected to the constant values
-        varietyPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+        qtyPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker numberPicker, int i, int i1) {
-                cartItem.setItemQty(i1);
                 Timber.d("loadQtyPicker: quantity " + i1);
             }
         });
@@ -146,45 +145,64 @@ public class ProductDetailFragment extends Fragment {
     }
 
     private void loadVarietyPicker() {
-        String[] items = getResources().getStringArray(R.array.candle_varieties);
+        Timber.d("loadVarietyPicker()");
+
+        final String[] varietiesArray = getResources().getStringArray(R.array.candle_varieties);
+
         // number picker main attributes
-        varietyPicker.setDisplayedValues(items);
+        varietyPicker.setMinValue(0);
+        varietyPicker.setMaxValue(varietiesArray.length - 1);
+
+        // set initial value to "Select a variety", which corresponds to 0
+        varietyPicker.setDisplayedValues(varietiesArray);
         varietyPicker.setWrapSelectorWheel(true);
 
         // Set the integer mSelected to the constant values
         varietyPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker numberPicker, int i, int i1) {
-                variety = items[i1];
-                Timber.d("loadVarietyPicker: variety " + variety);
-                cartItem.setItemVariety("" + variety);
+                String[] varieties = numberPicker.getDisplayedValues();
+                variety = varieties[i1];
+                pickerReadoutTV.setText("Variety: " + variety);
             }
         });
+        variety = varietiesArray[varietyValue];
+        Timber.d("loadVarietyPicker: variety:" + variety);
 
     }
 
     private void addToCart() {
         Timber.d("addToCart()");
-        // gather product info
-//        cartItem = new CartItem(productName.getText().toString(), variety, qtyPicker.getValue(),
-//                Integer.parseInt(cost.getText().toString()), 0.0);
 
-        cartItem = new CartItem("tealight", "cinnamon", 1,
-                1.0, 0.0);
+        cartItem = new CartItem(productName.getText().toString(), variety, qtyPicker.getValue(),
+                Integer.parseInt(cost.getText().toString()), 0.0);
+
+        // set cart item attributes based on choices by user
+        cartItem.setItemName(productName.getText().toString());
+        cartItem.setItemVariety(variety);
+        cartItem.setItemQty(qtyPicker.getValue());
+        cartItem.setItemUnitPrice(Integer.parseInt(cost.getText().toString()));
+
+        // emit new cart item as the observable item
         cartItemObservable = KKApplication.getObservable();
         Timber.d("cartItemObservable: " + cartItemObservable.toString());
 
         Timber.d("cartItem: " + cartItem.toString());
 
-//        cartItemConsumer = new Consumer<CartItem>() {
-//            @Override
-//            public void accept(CartItem cartItem) throws Exception {
-//            }
-//        };
-
-//        cartItemObservable.subscribe(cartItemConsumer);
         cartItemObservable.onNext(cartItem);
 
 
     }
+
+//    private class VarietyNumberPicker extends NumberPicker {
+//
+//        /** @attrs:
+//         * @param context
+//         * @param attrs: values list for the variety picker to display, i.e. string array
+//         * from Resources
+//         */
+//        public VarietyNumberPicker(Context context, AttributeSet attrs) {
+//            super(context, attrs);
+//        }
+//    }
 }

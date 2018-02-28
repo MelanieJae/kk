@@ -5,19 +5,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.application.melanieh.kk.shopping.ProductDetailActivity">
+    tools:context="com.application.melanieh.kk.checkout.CheckoutActivity">
 
-    <fragment
-        android:id="@+id/shoppingCartFragment"
-        android:name="com.application.melanieh.kk.checkout.ShoppingCartFragment"
+    <!-- views from shopping cart; must be here to ensure cart contents
+    are persisted via the retained fragment, which does not have its own layout -->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/cart_item_rv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
+    </android.support.v7.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/rv_emptyview_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center_horizontal"/>
+    <!-- end shopping cart views -->
 
     <fragment
         android:id="@+id/continueShoppingBtnFragment"
         android:name="com.application.melanieh.kk.checkout.ContinueShoppingBtnFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"/>
 
     <fragment
         android:id="@+id/stripeOnlyPayButtonFragment"

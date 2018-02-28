@@ -42,21 +42,26 @@
         android:layout_height="wrap_content" />
 
     <TextView
-        android:id="@+id/observable_test"
+        android:id="@+id/picker_readout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
     <android.widget.NumberPicker
         android:id="@+id/variety_picker"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="160dp"
         android:focusable="false"
         android:descendantFocusability="blocksDescendants"/>
+
+    <View
+        android:id="@+id/np_barrier"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"/>
 
     <android.widget.NumberPicker
         android:id="@+id/qty_picker"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="160dp"
         android:layout_marginEnd="@dimen/detail_dialog_horiz_margin"
         android:focusable="false"
         android:descendantFocusability="blocksDescendants"/>

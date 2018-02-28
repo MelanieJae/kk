@@ -16,12 +16,9 @@ public class Invoice {
     private String shippingLineItem;
     private String taxesLineItem;
     private String totalLineItem;
-    private String customerNotes;
 
-    public Invoice(ArrayList<CartItem> invoiceLineItems,
-                   String invoiceID, String shippingAddress, String billingAddress,
-                   String subtotal, String shippingLineItem, String taxesLineItem,
-                   String totalLineItem, String customerNotes) {
+    public Invoice(ArrayList<CartItem> invoiceLineItems, String invoiceID, String shippingAddress, String billingAddress, String subtotal,
+                   String shippingLineItem, String taxesLineItem, String totalLineItem) {
         this.invoiceLineItems = invoiceLineItems;
         this.invoiceID = invoiceID;
         this.shippingAddress = shippingAddress;
@@ -30,7 +27,6 @@ public class Invoice {
         this.shippingLineItem = shippingLineItem;
         this.taxesLineItem = taxesLineItem;
         this.totalLineItem = totalLineItem;
-        this.customerNotes = customerNotes;
     }
 
     public ArrayList<CartItem> getInvoiceLineItems() {
@@ -95,13 +91,5 @@ public class Invoice {
 
     public void setTotalLineItem(String totalLineItem) {
         this.totalLineItem = totalLineItem;
-    }
-
-    public String getCustomerNotes() {
-        return customerNotes;
-    }
-
-    public void setCustomerNotes(String customerNotes) {
-        this.customerNotes = customerNotes;
     }
 }

@@ -53,9 +53,7 @@ public class CartItem implements Parcelable {
         this.itemQty = itemQty;
     }
 
-    public double getItemUnitPrice() {
-        return itemUnitPrice;
-    }
+    public double getItemUnitPrice() { return itemUnitPrice; }
 
     public void setItemUnitPrice(double itemUnitPrice) {
         this.itemUnitPrice = itemUnitPrice;

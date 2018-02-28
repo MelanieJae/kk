@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.application.melanieh.kk.models_and_modules.CartItem;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -28,16 +30,13 @@ public class CartItemRVAdapter
 
     private Context context;
     private ArrayList<CartItem> cartItems;
+    // number formatter to display doubles in currency format (e.g. unit price, total price
+    // or shipping cost)
+    NumberFormat currencyFormatter = new DecimalFormat("#0.00");
 
     public CartItemRVAdapter(Context context, ArrayList<CartItem> cartItems) {
         this.context = context;
         this.cartItems = cartItems;
-    }
-
-    public void setCartItem(CartItem newItem) {
-        cartItems.clear();
-        cartItems.add(newItem);
-        notifyDataSetChanged();
     }
 
     @Override
@@ -59,7 +58,8 @@ public class CartItemRVAdapter
         holder.itemVarietyValue.setText(holder.cartItem.getItemVariety());
         holder.itemQtyValue.setText("" + holder.cartItem.getItemQty());
         holder.itemTotalPriceValue.setText
-                ("$" + holder.cartItem.getItemUnitPrice() * holder.cartItem.getItemQty());
+                ("$" + currencyFormatter.format(holder.cartItem.getItemUnitPrice()
+                        * (holder.cartItem.getItemQty())));
     }
 
 

@@ -1,44 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.application.melanieh.kk.checkout.CheckoutActivity">
 
-<LinearLayout
+    <!-- views from shopping cart; must be here to ensure cart contents
+    are persisted via the retained fragment, which does not have its own layout -->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/cart_item_rv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context="com.application.melanieh.kk.shopping.ProductDetailActivity">
+        android:layout_height="wrap_content">
+    </android.support.v7.widget.RecyclerView>
 
-        <fragment
-            android:id="@+id/shoppingCartFragment"
-            android:name="com.application.melanieh.kk.checkout.ShoppingCartFragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/continueShoppingBtnFragment"
-            app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/rv_emptyview_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center_horizontal"/>
+    <!-- end shopping cart views -->
 
-        <fragment
-            android:id="@+id/continueShoppingBtnFragment"
-            android:name="com.application.melanieh.kk.checkout.ContinueShoppingBtnFragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/stripeOnlyPayButtonFragment"
-            app:layout_constraintTop_toBottomOf="@+id/shoppingCartFragment" />
+    <fragment
+        android:id="@+id/continueShoppingBtnFragment"
+        android:name="com.application.melanieh.kk.checkout.ContinueShoppingBtnFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"/>
 
-        <fragment
-            android:id="@+id/stripeOnlyPayButtonFragment"
-            android:name="com.application.melanieh.kk.shopping.PayWithStripeBtnFragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <!-- only shows when Android Pay is not available/set up -->
-        <fragment
-            android:id="@+id/androidPayBtnFragment"
-            android:name="com.google.android.gms.wallet.fragment.SupportWalletFragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-    </LinearLayout>
-</ScrollView>
+    <fragment
+        android:id="@+id/stripeOnlyPayButtonFragment"
+        android:name="com.application.melanieh.kk.shopping.PayWithStripeBtnFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <!-- only shows when Android Pay is not available/set up -->
+    <fragment
+        android:id="@+id/androidPayBtnFragment"
+        android:name="com.google.android.gms.wallet.fragment.SupportWalletFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+</LinearLayout>

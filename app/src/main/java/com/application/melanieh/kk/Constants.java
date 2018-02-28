@@ -108,5 +108,7 @@ public class Constants {
 
     /** activity request codes **/
     public static final int REQUEST_CODE_LOAD_MASKED_WALLET = 100;
+    public static final int REQUEST_CODE_WRITE_EXTERNAL_STORAGE = 200;
+
 
 }

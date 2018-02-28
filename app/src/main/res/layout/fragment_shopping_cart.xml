@@ -1,20 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- this lay9out is not inflated/used; retained fragment only for data persistence -->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/cart_item_rv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </android.support.v7.widget.RecyclerView>
-
-    <TextView
-        android:id="@+id/rv_emptyview_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|center_horizontal"/>
 
 </LinearLayout>

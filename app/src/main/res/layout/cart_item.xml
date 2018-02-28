@@ -9,7 +9,7 @@
         <TextView
             android:id="@+id/itemNameValue"
             android:textSize="@dimen/cart_item_name_text_size"
-            android:layout_width="150dp"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/item_grid_cell_height"/>
     </TableRow>
 
